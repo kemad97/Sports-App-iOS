@@ -55,19 +55,17 @@ class SportsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        // Load the view controller from another storyboard
         let storyboard = UIStoryboard(name: "SportsLeagues", bundle: nil)
-    
-        if let sportsVC = storyboard.instantiateViewController(withIdentifier: "sports_leagues") as? SportsViewController{
-            //send selected sports leagues
+        if let sportsVC = storyboard.instantiateViewController(withIdentifier: "SportsLeagues") as? SportsLeaguesViewController {
             
-            //navigate to sports leagues
-            self.navigationController?.pushViewController(sportsVC, animated: true)
+            sportsVC.sportName = sportsData[indexPath.row].title
+    
+            navigationController?.pushViewController(sportsVC, animated: true)
+            
             print("selected")
-        }else{
-            print("error")
+        } else {
+            print("Failed to instantiate SportsViewController from SportsLeagues.storyboard")
         }
-        
     }
-
 }
