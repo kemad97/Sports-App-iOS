@@ -55,7 +55,19 @@ class SportsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(sportsData[indexPath.row].title)
+
+        let storyboard = UIStoryboard(name: "SportsLeagues", bundle: nil)
+    
+        if let sportsVC = storyboard.instantiateViewController(withIdentifier: "sports_leagues") as? SportsViewController{
+            //send selected sports leagues
+            
+            //navigate to sports leagues
+            self.navigationController?.pushViewController(sportsVC, animated: true)
+            print("selected")
+        }else{
+            print("error")
+        }
+        
     }
 
 }

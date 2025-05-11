@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -58,6 +58,10 @@
 		E1B25F762DD08A2500D1A034 /* Sports_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sports_AppUITests.swift; sourceTree = "<group>"; };
 		E1B25F782DD08A2500D1A034 /* Sports_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sports_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		45E6813E2DD0F801006CB382 /* sports_leagues */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = sports_leagues; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		E1B25F4C2DD08A2300D1A034 /* Frameworks */ = {
@@ -117,6 +121,7 @@
 		E1B25F512DD08A2300D1A034 /* Sports App */ = {
 			isa = PBXGroup;
 			children = (
+				45E6813E2DD0F801006CB382 /* sports_leagues */,
 				45E681302DD0F158006CB382 /* main_screen */,
 				E1B25F522DD08A2300D1A034 /* AppDelegate.swift */,
 				E1B25F542DD08A2300D1A034 /* SceneDelegate.swift */,
@@ -161,6 +166,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				45E6813E2DD0F801006CB382 /* sports_leagues */,
 			);
 			name = "Sports App";
 			productName = "Sports App";
