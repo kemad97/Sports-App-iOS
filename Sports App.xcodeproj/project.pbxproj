@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E168A32C2DD122C3009C0658 /* lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = E168A32B2DD122C3009C0658 /* lottie.json */; };
+		E168A32E2DD122D4009C0658 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E168A32D2DD122D4009C0658 /* SplashViewController.swift */; };
+		E168A3312DD12369009C0658 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E168A3302DD12369009C0658 /* Lottie */; };
 		E1B25F532DD08A2300D1A034 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B25F522DD08A2300D1A034 /* AppDelegate.swift */; };
 		E1B25F552DD08A2300D1A034 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B25F542DD08A2300D1A034 /* SceneDelegate.swift */; };
 		E1B25F572DD08A2300D1A034 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B25F562DD08A2300D1A034 /* ViewController.swift */; };
@@ -37,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E168A32B2DD122C3009C0658 /* lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = lottie.json; sourceTree = "<group>"; };
+		E168A32D2DD122D4009C0658 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		E1B25F4F2DD08A2300D1A034 /* Sports App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sports App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B25F522DD08A2300D1A034 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1B25F542DD08A2300D1A034 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E168A3312DD12369009C0658 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,8 +110,10 @@
 				E1B25F522DD08A2300D1A034 /* AppDelegate.swift */,
 				E1B25F542DD08A2300D1A034 /* SceneDelegate.swift */,
 				E1B25F562DD08A2300D1A034 /* ViewController.swift */,
+				E168A32B2DD122C3009C0658 /* lottie.json */,
 				E1B25F582DD08A2300D1A034 /* Main.storyboard */,
 				E1B25F5E2DD08A2400D1A034 /* Assets.xcassets */,
+				E168A32D2DD122D4009C0658 /* SplashViewController.swift */,
 				E1B25F602DD08A2400D1A034 /* LaunchScreen.storyboard */,
 				E1B25F632DD08A2400D1A034 /* Info.plist */,
 				E1B25F5B2DD08A2300D1A034 /* Sports_App.xcdatamodeld */,
@@ -146,6 +154,9 @@
 			dependencies = (
 			);
 			name = "Sports App";
+			packageProductDependencies = (
+				E168A3302DD12369009C0658 /* Lottie */,
+			);
 			productName = "Sports App";
 			productReference = E1B25F4F2DD08A2300D1A034 /* Sports App.app */;
 			productType = "com.apple.product-type.application";
@@ -218,6 +229,9 @@
 				Base,
 			);
 			mainGroup = E1B25F462DD08A2300D1A034;
+			packageReferences = (
+				E168A32F2DD12369009C0658 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = E1B25F502DD08A2300D1A034 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -234,6 +248,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E168A32C2DD122C3009C0658 /* lottie.json in Resources */,
 				E1B25F622DD08A2400D1A034 /* LaunchScreen.storyboard in Resources */,
 				E1B25F5F2DD08A2400D1A034 /* Assets.xcassets in Resources */,
 				E1B25F5A2DD08A2300D1A034 /* Main.storyboard in Resources */,
@@ -265,6 +280,7 @@
 				E1B25F532DD08A2300D1A034 /* AppDelegate.swift in Sources */,
 				E1B25F5D2DD08A2300D1A034 /* Sports_App.xcdatamodeld in Sources */,
 				E1B25F552DD08A2300D1A034 /* SceneDelegate.swift in Sources */,
+				E168A32E2DD122D4009C0658 /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,6 +616,26 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E168A32F2DD12369009C0658 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = versionRange;
+				maximumVersion = 5.0.0;
+				minimumVersion = 4.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E168A3302DD12369009C0658 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E168A32F2DD12369009C0658 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		E1B25F5B2DD08A2300D1A034 /* Sports_App.xcdatamodeld */ = {
