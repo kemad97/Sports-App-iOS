@@ -7,9 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+
 		E168A32C2DD122C3009C0658 /* lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = E168A32B2DD122C3009C0658 /* lottie.json */; };
 		E168A32E2DD122D4009C0658 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E168A32D2DD122D4009C0658 /* SplashViewController.swift */; };
 		E168A3312DD12369009C0658 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E168A3302DD12369009C0658 /* Lottie */; };
+
+		45E681312DD0F158006CB382 /* SportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6812F2DD0F158006CB382 /* SportsViewController.swift */; };
+		45E681322DD0F158006CB382 /* SportsCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6812E2DD0F158006CB382 /* SportsCellTableViewCell.swift */; };
+		45E681332DD0F158006CB382 /* Sport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6812D2DD0F158006CB382 /* Sport.swift */; };
+
 		E1B25F532DD08A2300D1A034 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B25F522DD08A2300D1A034 /* AppDelegate.swift */; };
 		E1B25F552DD08A2300D1A034 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B25F542DD08A2300D1A034 /* SceneDelegate.swift */; };
 		E1B25F572DD08A2300D1A034 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B25F562DD08A2300D1A034 /* ViewController.swift */; };
@@ -40,8 +46,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+
 		E168A32B2DD122C3009C0658 /* lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = lottie.json; sourceTree = "<group>"; };
 		E168A32D2DD122D4009C0658 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+
+		45E6812D2DD0F158006CB382 /* Sport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sport.swift; sourceTree = "<group>"; };
+		45E6812E2DD0F158006CB382 /* SportsCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsCellTableViewCell.swift; sourceTree = "<group>"; };
+		45E6812F2DD0F158006CB382 /* SportsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsViewController.swift; sourceTree = "<group>"; };
+
 		E1B25F4F2DD08A2300D1A034 /* Sports App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sports App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B25F522DD08A2300D1A034 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1B25F542DD08A2300D1A034 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +96,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		45E681302DD0F158006CB382 /* main_screen */ = {
+			isa = PBXGroup;
+			children = (
+				45E6812D2DD0F158006CB382 /* Sport.swift */,
+				45E6812E2DD0F158006CB382 /* SportsCellTableViewCell.swift */,
+				45E6812F2DD0F158006CB382 /* SportsViewController.swift */,
+			);
+			path = main_screen;
+			sourceTree = "<group>";
+		};
 		E1B25F462DD08A2300D1A034 = {
 			isa = PBXGroup;
 			children = (
@@ -107,6 +129,7 @@
 		E1B25F512DD08A2300D1A034 /* Sports App */ = {
 			isa = PBXGroup;
 			children = (
+				45E681302DD0F158006CB382 /* main_screen */,
 				E1B25F522DD08A2300D1A034 /* AppDelegate.swift */,
 				E1B25F542DD08A2300D1A034 /* SceneDelegate.swift */,
 				E1B25F562DD08A2300D1A034 /* ViewController.swift */,
@@ -279,6 +302,9 @@
 				E1B25F572DD08A2300D1A034 /* ViewController.swift in Sources */,
 				E1B25F532DD08A2300D1A034 /* AppDelegate.swift in Sources */,
 				E1B25F5D2DD08A2300D1A034 /* Sports_App.xcdatamodeld in Sources */,
+				45E681312DD0F158006CB382 /* SportsViewController.swift in Sources */,
+				45E681322DD0F158006CB382 /* SportsCellTableViewCell.swift in Sources */,
+				45E681332DD0F158006CB382 /* Sport.swift in Sources */,
 				E1B25F552DD08A2300D1A034 /* SceneDelegate.swift in Sources */,
 				E168A32E2DD122D4009C0658 /* SplashViewController.swift in Sources */,
 			);
