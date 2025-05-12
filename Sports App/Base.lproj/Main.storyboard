@@ -111,7 +111,7 @@
             </objects>
             <point key="canvasLocation" x="953.43511450381675" y="-27.464788732394368"/>
         </scene>
-        <!--Item-->
+        <!--Favorite-->
         <scene sceneID="OUd-tf-xBT">
             <objects>
                 <viewController id="Tm1-R7-YcC" sceneMemberID="viewController">
@@ -130,7 +130,7 @@
                         <viewLayoutGuide key="safeArea" id="0nx-st-kSQ"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item" id="KqF-Xh-y3V"/>
+                    <tabBarItem key="tabBarItem" title="Favorite" image="favorite" id="KqF-Xh-y3V"/>
                     <navigationItem key="navigationItem" id="0K5-v3-Jyv"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GGN-5m-Ei8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
