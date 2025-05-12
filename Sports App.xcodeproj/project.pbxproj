@@ -10,8 +10,6 @@
 		45E681312DD0F158006CB382 /* SportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6812F2DD0F158006CB382 /* SportsViewController.swift */; };
 		45E681322DD0F158006CB382 /* SportsCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6812E2DD0F158006CB382 /* SportsCellTableViewCell.swift */; };
 		45E681332DD0F158006CB382 /* Sport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6812D2DD0F158006CB382 /* Sport.swift */; };
-		E144F19A2DD1392C00FE4618 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E144F1992DD1392C00FE4618 /* Alamofire */; };
-		E144F19C2DD1392C00FE4618 /* AlamofireDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = E144F19B2DD1392C00FE4618 /* AlamofireDynamic */; };
 		E144F19E2DD13B2C00FE4618 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E144F19D2DD13B2C00FE4618 /* ApiService.swift */; };
 		E144F1A02DD13C2700FE4618 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E144F19F2DD13C2700FE4618 /* Model.swift */; };
 		E168A32C2DD122C3009C0658 /* lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = E168A32B2DD122C3009C0658 /* lottie.json */; };
@@ -31,6 +29,7 @@
 		E1DD70DA2DD1EDBA007C92EA /* SportsLeaguesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DD70D62DD1EDBA007C92EA /* SportsLeaguesViewController.swift */; };
 		E1DD70DB2DD1EDBA007C92EA /* SportsLeagues.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E1DD70D72DD1EDBA007C92EA /* SportsLeagues.storyboard */; };
 		E1DD70DC2DD1EDBA007C92EA /* LeagueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DD70D82DD1EDBA007C92EA /* LeagueTableViewController.swift */; };
+		E1DD70E02DD1EE87007C92EA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E1DD70DF2DD1EE87007C92EA /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,8 +83,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E168A3312DD12369009C0658 /* Lottie in Frameworks */,
-				E144F19C2DD1392C00FE4618 /* AlamofireDynamic in Frameworks */,
-				E144F19A2DD1392C00FE4618 /* Alamofire in Frameworks */,
+				E1DD70E02DD1EE87007C92EA /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,8 +201,7 @@
 			name = "Sports App";
 			packageProductDependencies = (
 				E168A3302DD12369009C0658 /* Lottie */,
-				E144F1992DD1392C00FE4618 /* Alamofire */,
-				E144F19B2DD1392C00FE4618 /* AlamofireDynamic */,
+				E1DD70DF2DD1EE87007C92EA /* Alamofire */,
 			);
 			productName = "Sports App";
 			productReference = E1B25F4F2DD08A2300D1A034 /* Sports App.app */;
@@ -280,7 +277,7 @@
 			mainGroup = E1B25F462DD08A2300D1A034;
 			packageReferences = (
 				E168A32F2DD12369009C0658 /* XCRemoteSwiftPackageReference "lottie-ios" */,
-				E144F1982DD1392C00FE4618 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				E1DD70DE2DD1EE87007C92EA /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = E1B25F502DD08A2300D1A034 /* Products */;
 			projectDirPath = "";
@@ -677,14 +674,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E144F1982DD1392C00FE4618 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.0.0;
-			};
-		};
 		E168A32F2DD12369009C0658 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -694,23 +683,26 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		E1DD70DE2DD1EE87007C92EA /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = exactVersion;
+				version = 5.6.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E144F1992DD1392C00FE4618 /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E144F1982DD1392C00FE4618 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		E144F19B2DD1392C00FE4618 /* AlamofireDynamic */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E144F1982DD1392C00FE4618 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = AlamofireDynamic;
-		};
 		E168A3302DD12369009C0658 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E168A32F2DD12369009C0658 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;
+		};
+		E1DD70DF2DD1EE87007C92EA /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1DD70DE2DD1EE87007C92EA /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -6,3 +6,4 @@
 *.xccheckout
 DerivedData/
 *.xcodeproj/project.pbxproj
+*.resolved
