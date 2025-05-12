@@ -6,40 +6,63 @@
 //
 
 import UIKit
+import Kingfisher
 
 class LeagueTableViewController: UITableViewController {
-
+    
+    var sportName : String!
+    var leaguesList: [League] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "\(sportName!) Leagues"
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        APIService.shared.fetchFootballLeagues(completion: {[weak self] result in
+            switch result{
+            case .success(let leagues):
+                self?.leaguesList = leagues
+                self?.tableView.reloadData()
+            case .failure:
+                print(result)
+            }
+        })
     }
 
     // MARK: - Table view data source
 
+    
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return leaguesList.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! LeagueTableViewCell
+        
+        cell.leagueName.text = leaguesList[indexPath.row].leagueName
+        cell.leagueImage.kf.setImage(with: URL(string: leaguesList[indexPath.row].leagueLogo ?? ""), placeholder: UIImage(named: "leaguePlaceholder"))
+        
+        
+        cell.leagueImage.layer.cornerRadius = cell.leagueImage.layer.frame.width/2
+        cell.leagueImage.layer.masksToBounds = true
+        
 
         return cell
     }
-    */
+    
+    
 
     /*
     // Override to support conditional editing of the table view.

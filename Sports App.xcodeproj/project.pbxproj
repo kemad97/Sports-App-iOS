@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,7 @@
 		45FFB5882DD220EA00DC686C /* LeagueTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FFB5832DD220EA00DC686C /* LeagueTableViewCell.swift */; };
 		45FFB5892DD220EA00DC686C /* LeagueTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FFB5842DD220EA00DC686C /* LeagueTableViewController.swift */; };
 		45FFB58A2DD220EA00DC686C /* SportsLeaguesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FFB5862DD220EA00DC686C /* SportsLeaguesViewController.swift */; };
+		45FFB5B32DD2306A00DC686C /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 45FFB5B22DD2306A00DC686C /* Kingfisher */; };
 		E144F19E2DD13B2C00FE4618 /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E144F19D2DD13B2C00FE4618 /* ApiService.swift */; };
 		E144F1A02DD13C2700FE4618 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E144F19F2DD13C2700FE4618 /* Model.swift */; };
 		E168A32C2DD122C3009C0658 /* lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = E168A32B2DD122C3009C0658 /* lottie.json */; };
@@ -86,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45FFB5B32DD2306A00DC686C /* Kingfisher in Frameworks */,
 				E168A3312DD12369009C0658 /* Lottie in Frameworks */,
 				E18CEABF2DD1417C00828D49 /* Alamofire in Frameworks */,
 			);
@@ -129,6 +131,21 @@
 			path = sports_leagues;
 			sourceTree = "<group>";
 		};
+		45FFB5AE2DD223F900DC686C /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				45E6813E2DD0F801006CB382 /* sports_leagues */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		45FFB5B12DD2306A00DC686C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		E1B25F462DD08A2300D1A034 = {
 			isa = PBXGroup;
 			children = (
@@ -136,6 +153,8 @@
 				E1B25F6B2DD08A2500D1A034 /* Sports AppTests */,
 				E1B25F752DD08A2500D1A034 /* Sports AppUITests */,
 				E1B25F502DD08A2300D1A034 /* Products */,
+				45FFB5AE2DD223F900DC686C /* Recovered References */,
+				45FFB5B12DD2306A00DC686C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -209,6 +228,7 @@
 			packageProductDependencies = (
 				E168A3302DD12369009C0658 /* Lottie */,
 				E18CEABE2DD1417C00828D49 /* Alamofire */,
+				45FFB5B22DD2306A00DC686C /* Kingfisher */,
 			);
 			productName = "Sports App";
 			productReference = E1B25F4F2DD08A2300D1A034 /* Sports App.app */;
@@ -284,6 +304,7 @@
 			packageReferences = (
 				E168A32F2DD12369009C0658 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				E18CEABD2DD1417C00828D49 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				45FFB5B02DD22FAB00DC686C /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = E1B25F502DD08A2300D1A034 /* Products */;
 			projectDirPath = "";
@@ -680,6 +701,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		45FFB5B02DD22FAB00DC686C /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
 		E168A32F2DD12369009C0658 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
@@ -700,6 +729,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		45FFB5B22DD2306A00DC686C /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 45FFB5B02DD22FAB00DC686C /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		E168A3302DD12369009C0658 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E168A32F2DD12369009C0658 /* XCRemoteSwiftPackageReference "lottie-ios" */;

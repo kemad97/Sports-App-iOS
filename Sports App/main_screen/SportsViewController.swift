@@ -57,7 +57,7 @@ class SportsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Load the view controller from another storyboard
         let storyboard = UIStoryboard(name: "SportsLeagues", bundle: nil)
-        if let sportsVC = storyboard.instantiateViewController(withIdentifier: "SportsLeagues") as? SportsLeaguesViewController {
+        if let sportsVC = storyboard.instantiateViewController(withIdentifier: "LeagueTableViewController") as? LeagueTableViewController {
             
             sportsVC.sportName = sportsData[indexPath.row].title
     
