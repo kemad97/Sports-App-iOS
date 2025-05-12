@@ -62,8 +62,6 @@ class SportsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             sportsVC.sportName = sportsData[indexPath.row].title
     
             navigationController?.pushViewController(sportsVC, animated: true)
-            
-            print("selected")
         } else {
             print("Failed to instantiate SportsViewController from SportsLeagues.storyboard")
         }
