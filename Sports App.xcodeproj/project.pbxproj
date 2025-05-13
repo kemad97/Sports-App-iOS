@@ -164,6 +164,7 @@
 		451B91732DD372C600AE40F9 /* data_source */ = {
 			isa = PBXGroup;
 			children = (
+				451B91852DD374E700AE40F9 /* local */,
 				451B91702DD372C600AE40F9 /* entities */,
 				451B91722DD372C600AE40F9 /* remote */,
 			);
@@ -176,8 +177,103 @@
 				45E6812D2DD0F158006CB382 /* Sport.swift */,
 				45E6812E2DD0F158006CB382 /* SportsCellTableViewCell.swift */,
 				45E6812F2DD0F158006CB382 /* SportsViewController.swift */,
+				E1B25F582DD08A2300D1A034 /* Main.storyboard */,
 			);
 			path = view;
+			sourceTree = "<group>";
+		};
+		451B91782DD3741F00AE40F9 /* leagues_details */ = {
+			isa = PBXGroup;
+			children = (
+				451B91802DD3749800AE40F9 /* presenter */,
+				451B91812DD3749800AE40F9 /* view */,
+			);
+			path = leagues_details;
+			sourceTree = "<group>";
+		};
+		451B917A2DD3746B00AE40F9 /* presenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = presenter;
+			sourceTree = "<group>";
+		};
+		451B917B2DD3746B00AE40F9 /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		451B917C2DD3746B00AE40F9 /* team_details */ = {
+			isa = PBXGroup;
+			children = (
+				451B917A2DD3746B00AE40F9 /* presenter */,
+				451B917B2DD3746B00AE40F9 /* view */,
+			);
+			path = team_details;
+			sourceTree = "<group>";
+		};
+		451B917D2DD3748800AE40F9 /* favorite_scree */ = {
+			isa = PBXGroup;
+			children = (
+				451B917E2DD3749500AE40F9 /* presenter */,
+				451B917F2DD3749500AE40F9 /* view */,
+			);
+			path = favorite_scree;
+			sourceTree = "<group>";
+		};
+		451B917E2DD3749500AE40F9 /* presenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = presenter;
+			sourceTree = "<group>";
+		};
+		451B917F2DD3749500AE40F9 /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		451B91802DD3749800AE40F9 /* presenter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = presenter;
+			sourceTree = "<group>";
+		};
+		451B91812DD3749800AE40F9 /* view */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		451B91832DD3749D00AE40F9 /* view */ = {
+			isa = PBXGroup;
+			children = (
+				E1715BBE2DD2B386006A51D8 /* SplashViewController.swift */,
+				E1715BC12DD2B386006A51D8 /* lottie.json */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		451B91842DD374AB00AE40F9 /* app */ = {
+			isa = PBXGroup;
+			children = (
+				E1B25F522DD08A2300D1A034 /* AppDelegate.swift */,
+				E1B25F542DD08A2300D1A034 /* SceneDelegate.swift */,
+			);
+			path = app;
+			sourceTree = "<group>";
+		};
+		451B91852DD374E700AE40F9 /* local */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = local;
 			sourceTree = "<group>";
 		};
 		45E681302DD0F158006CB382 /* main_screen */ = {
@@ -191,8 +287,7 @@
 		E1715BBD2DD2B386006A51D8 /* splashScreen */ = {
 			isa = PBXGroup;
 			children = (
-				E1715BBE2DD2B386006A51D8 /* SplashViewController.swift */,
-				E1715BC12DD2B386006A51D8 /* lottie.json */,
+				451B91832DD3749D00AE40F9 /* view */,
 			);
 			path = splashScreen;
 			sourceTree = "<group>";
@@ -220,12 +315,13 @@
 		E1B25F512DD08A2300D1A034 /* Sports App */ = {
 			isa = PBXGroup;
 			children = (
+				451B91842DD374AB00AE40F9 /* app */,
+				451B917D2DD3748800AE40F9 /* favorite_scree */,
+				451B917C2DD3746B00AE40F9 /* team_details */,
+				451B91782DD3741F00AE40F9 /* leagues_details */,
 				451B91682DD3728100AE40F9 /* sports_leagues */,
 				E1715BBD2DD2B386006A51D8 /* splashScreen */,
 				45E681302DD0F158006CB382 /* main_screen */,
-				E1B25F522DD08A2300D1A034 /* AppDelegate.swift */,
-				E1B25F542DD08A2300D1A034 /* SceneDelegate.swift */,
-				E1B25F582DD08A2300D1A034 /* Main.storyboard */,
 				E1B25F5E2DD08A2400D1A034 /* Assets.xcassets */,
 				E1B25F602DD08A2400D1A034 /* LaunchScreen.storyboard */,
 				E1B25F632DD08A2400D1A034 /* Info.plist */,
