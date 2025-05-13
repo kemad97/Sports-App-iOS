@@ -32,6 +32,7 @@
 		E1B25F772DD08A2500D1A034 /* Sports_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B25F762DD08A2500D1A034 /* Sports_AppUITests.swift */; };
 		E1B25F792DD08A2500D1A034 /* Sports_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B25F782DD08A2500D1A034 /* Sports_AppUITestsLaunchTests.swift */; };
 		E1DD70E02DD1EE87007C92EA /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = E1DD70DF2DD1EE87007C92EA /* Alamofire */; };
+		E1EA1C402DD375A900206145 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA1C3F2DD375A900206145 /* File.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 		E1B25F722DD08A2500D1A034 /* Sports AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Sports AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1B25F762DD08A2500D1A034 /* Sports_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sports_AppUITests.swift; sourceTree = "<group>"; };
 		E1B25F782DD08A2500D1A034 /* Sports_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sports_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E1EA1C3F2DD375A900206145 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = File.swift; path = "Sports App/model/data_source/entities/File.swift"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,6 +228,7 @@
 		451B917E2DD3749500AE40F9 /* presenter */ = {
 			isa = PBXGroup;
 			children = (
+				E1EA1C3F2DD375A900206145 /* File.swift */,
 			);
 			path = presenter;
 			sourceTree = "<group>";
@@ -501,6 +504,7 @@
 				45E681322DD0F158006CB382 /* SportsCellTableViewCell.swift in Sources */,
 				45E681332DD0F158006CB382 /* Sport.swift in Sources */,
 				451B91742DD372C600AE40F9 /* Responses.swift in Sources */,
+				E1EA1C402DD375A900206145 /* File.swift in Sources */,
 				451B91752DD372C600AE40F9 /* LeaguesAPIService.swift in Sources */,
 				451B91762DD372C600AE40F9 /* Entities.swift in Sources */,
 				E1B25F552DD08A2300D1A034 /* SceneDelegate.swift in Sources */,
