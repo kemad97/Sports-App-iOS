@@ -7,25 +7,7 @@
 
 import Foundation
 
-struct LeaguesResponse: Codable {
-    let success: Int
-    let result: [League]
-}
 
-struct TeamsResponse: Codable {
-    let success: Int
-    let result: [Team]
-}
-
-struct TeamDetailsResponse: Codable {
-    let success: Int
-    let result: [Team]
-}
-
-struct FixturesResponse: Codable {
-    let success: Int
-    let result: [Fixture]
-}
 
 // MARK: - Data Models
 struct League: Codable {
