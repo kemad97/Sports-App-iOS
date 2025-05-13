@@ -9,7 +9,6 @@ import Foundation
 
 
 
-// MARK: - Data Models
 struct League: Codable {
     let leagueKey: Int
     let leagueName: String
