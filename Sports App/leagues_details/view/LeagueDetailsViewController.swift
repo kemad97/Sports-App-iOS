@@ -19,6 +19,9 @@ class LeagueDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+          
+      
         setupUI()
         fetchData()
     }
@@ -59,19 +62,16 @@ class LeagueDetailsViewController: UIViewController {
         if let flowLayout = upcomingEventsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
             flowLayout.itemSize = CGSize(width: 250, height: 100)
-            flowLayout.minimumLineSpacing = 12
         }
         
         if let flowLayout = latestEventsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .vertical
             flowLayout.itemSize = CGSize(width: view.frame.width - 32, height: 80)
-            flowLayout.minimumLineSpacing = 10
         }
         
         if let flowLayout = teamsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
             flowLayout.itemSize = CGSize(width: 80, height: 100)
-            flowLayout.minimumLineSpacing = 16
         }
         
         // Important: Disable scrolling for Latest Events collection
@@ -187,7 +187,7 @@ class LeagueDetailsViewController: UIViewController {
     // MARK: - Actions
     @objc private func toggleFavorite() {
         // Implementation for CoreData saving
-        print("Favorite button tapped - League: \(league?.leagueName ?? "")")
+        print("Favorite button tapped")
     }
 }
 
@@ -200,110 +200,109 @@ extension LeagueDetailsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == upcomingEventsCollectionView {
-            return upcomingFixtures.count > 0 ? upcomingFixtures.count : 1
+            return max(upcomingFixtures.count, 1) // At least show 1 cell
         } else if collectionView == latestEventsCollectionView {
-            return latestFixtures.count > 0 ? latestFixtures.count : 1
+            return max(latestFixtures.count, 1)
         } else if collectionView == teamsCollectionView {
-            return teams.count > 0 ? teams.count : 1
+            return max(teams.count, 1)
         }
         return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == upcomingEventsCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UpcomingEventsCell", for: indexPath) as! UpcomingEventsCell
-            
-            if upcomingFixtures.count > 0 && indexPath.item < upcomingFixtures.count {
-                let fixture = upcomingFixtures[indexPath.item]
-                
-                // Set text data
-                cell.homeName.text = fixture.matchHometeamName
-                cell.awayName.text = fixture.matchAwayteamName
-                cell.date.text = formatDate(fixture.matchDate)
-                cell.scoreLabel.text = "-"
-                
-                // Load images with Kingfisher
-                if let homeImageURL = URL(string: fixture.teamHomeBadge ?? "") {
-                    cell.homeImg.kf.setImage(with: homeImageURL, placeholder: UIImage(named: "placeholder_team"))
+            // Try to dequeue the custom cell
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UpcomingEventsCell", for: indexPath) as? UpcomingEventsCell {
+                if !upcomingFixtures.isEmpty && indexPath.item < upcomingFixtures.count {
+                    let fixture = upcomingFixtures[indexPath.item]
+                    cell.homeName.text = fixture.matchHometeamName
+                    cell.awayName.text = fixture.matchAwayteamName
+                    cell.date.text = fixture.matchDate
+                    
+                    cell.homeImg.kf.setImage(with: URL(string: fixture.teamHomeBadge ?? ""),
+                                             placeholder: UIImage(named: "placeholder_team"))
+                    cell.awayImg.kf.setImage(with: URL(string: fixture.teamAwayBadge ?? ""),
+                                             placeholder: UIImage(named: "placeholder_team"))
+                } else {
+                    // Handle empty state
+                    cell.homeName.text = "No upcoming fixtures"
+                    cell.awayName.text = ""
+                    cell.date.text = ""
+                    cell.homeImg.image = UIImage(named: "placeholder_team")
+                    cell.awayImg.image = UIImage(named: "placeholder_team")
                 }
-                
-                if let awayImageURL = URL(string: fixture.teamAwayBadge ?? "") {
-                    cell.awayImg.kf.setImage(with: awayImageURL, placeholder: UIImage(named: "placeholder_team"))
-                }
+                return cell
             } else {
-                // Show placeholder or empty state
-                cell.homeName.text = "No upcoming matches"
-                cell.awayName.text = ""
-                cell.date.text = ""
-                cell.scoreLabel.text = ""
-                cell.homeImg.image = nil
-                cell.awayImg.image = nil
+                // Fallback to basic cell if custom cell doesn't work
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BasicCell", for: indexPath)
+                cell.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.3)
+                cell.layer.cornerRadius = 10
+                return cell
             }
-            
+        }
+        else if collectionView == latestEventsCollectionView {
+            // Try to dequeue the custom cell
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LatestEventsCell", for: indexPath) as? LatestEventsCell {
+                if !latestFixtures.isEmpty && indexPath.item < latestFixtures.count {
+                    let fixture = latestFixtures[indexPath.item]
+                    cell.homeName.text = fixture.matchHometeamName
+                    cell.awayName.text = fixture.matchAwayteamName
+                    cell.homeScore.text = fixture.goalsHomeTeam ?? "0"
+                    cell.awayScore.text = fixture.goalsAwayTeam ?? "0"
+                    cell.date.text = fixture.matchDate
+                    
+                    cell.homeImg.kf.setImage(with: URL(string: fixture.teamHomeBadge ?? ""),
+                                           placeholder: UIImage(named: "placeholder_team"))
+                    cell.awayImg.kf.setImage(with: URL(string: fixture.teamAwayBadge ?? ""),
+                                           placeholder: UIImage(named: "placeholder_team"))
+                } else {
+                    // Handle empty state
+                    cell.homeName.text = "No recent fixtures"
+                    cell.awayName.text = ""
+                    cell.homeScore.text = ""
+                    cell.awayScore.text = ""
+                    cell.date.text = ""
+                    cell.homeImg.image = UIImage(named: "placeholder_team")
+                    cell.awayImg.image = UIImage(named: "placeholder_team")
+                }
+                return cell
+            } else {
+                // Fallback to basic cell if custom cell doesn't work
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BasicCell", for: indexPath)
+                cell.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.3)
+                cell.layer.cornerRadius = 10
+                return cell
+            }
+        }
+        else if collectionView == teamsCollectionView {
+            // Try to dequeue the custom cell
+            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TeamsCell", for: indexPath) as? TeamsCell {
+                if !teams.isEmpty && indexPath.item < teams.count {
+                    let team = teams[indexPath.item]
+                    cell.teamName.text = team.teamName
+                    
+//                    cell.teamImg.kf.setImage(with: URL(string: team.teamLogo ?? ""),
+//                                           placeholder: UIImage(named: "placeholder_team"))
+                } else {
+                    // Handle empty state
+                    cell.teamName.text = "No teams"
+                    cell.teamImg.image = UIImage(named: "placeholder_team")
+                }
+                return cell
+            } else {
+                // Fallback to basic cell if custom cell doesn't work
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "BasicCell", for: indexPath)
+                cell.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.3)
+                cell.layer.cornerRadius = 10
+                return cell
+            }
+        }
+        else {
+            // Fallback - should never reach here
+            let cell = UICollectionViewCell()
+            cell.backgroundColor = .red
             return cell
         }
-//        else if collectionView == latestEventsCollectionView {
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LatestEventsCell", for: indexPath) as! LatestEventsCell
-//
-//            if latestFixtures.count > 0 && indexPath.item < latestFixtures.count {
-//                let fixture = latestFixtures[indexPath.item]
-//
-//                // Set text data
-//                cell.homeName.text = fixture.matchHometeamName
-//                cell.awayName.text = fixture.matchAwayteamName
-//                cell.homeScore.text = fixture.goalsHomeTeam ?? "0"
-//                cell.awayScore.text = fixture.goalsAwayTeam ?? "0"
-//                cell.date.text = formatDate(fixture.matchDate)
-//
-//                // Load images with Kingfisher
-//                if let homeImageURL = URL(string: fixture.teamHomeBadge ?? "") {
-//                    cell.homeImg.kf.setImage(with: homeImageURL, placeholder: UIImage(named: "placeholder_team"))
-//                }
-//
-//                if let awayImageURL = URL(string: fixture.teamAwayBadge ?? "") {
-//                    cell.awayImg.kf.setImage(with: awayImageURL, placeholder: UIImage(named: "placeholder_team"))
-//                }
-//            }
-//            return cell
-//        }
-//        else if collectionView == teamsCollectionView {
-//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TeamCell", for: indexPath) as! TeamCell
-//
-//            if teams.count > 0 && indexPath.item < teams.count {
-//                let team = teams[indexPath.item]
-//
-//                // Set text data
-//                cell.teamName.text = team.teamName
-//
-//                // Load team image with Kingfisher
-//                if let teamImageURL = URL(string: team.teamLogo ?? "") {
-//                    cell.teamImg.kf.setImage(with: teamImageURL, placeholder: UIImage(named: "placeholder_team"))
-//                }
-//            } else {
-//                // Show placeholder or empty state
-//                cell.teamName.text = "No teams"
-//                cell.teamImg.image = UIImage(named: "placeholder_team")
-//            }
-//
-//            return cell
-//        }
-//
-        // Default fallback cell - should never reach this
-        let cell = UICollectionViewCell()
-        cell.backgroundColor = .red
-        return cell
-    }
-    
-    // Helper method to format dates
-    private func formatDate(_ dateString: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "yyyy-MM-dd"
-        
-        guard let date = inputFormatter.date(from: dateString) else { return dateString }
-        
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "MMM d, yyyy"
-        return outputFormatter.string(from: date)
     }
 }
 
@@ -311,36 +310,29 @@ extension LeagueDetailsViewController: UICollectionViewDataSource {
 extension LeagueDetailsViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //        if collectionView == teamsCollectionView && teams.count > 0 && indexPath.item < teams.count {
-        //            let team = teams[indexPath.item]
-        //
-        //            // Navigate to team details
-        //            let storyboard = UIStoryboard(name: "TeamDetails", bundle: nil)
-        ////            if let teamDetailsVC = storyboard.instantiateViewController(withIdentifier: "TeamDetailsViewController") as? TeamDetailsCollectionViewCell {
-        ////                teamDetailsVC.teamId = team
-        ////                navigationController?.pushViewController(teamDetailsVC, animated: true)
-        ////            }
-        ////        }
-        //    }
+        if collectionView == teamsCollectionView && !teams.isEmpty && indexPath.item < teams.count {
+            let team = teams[indexPath.item]
+            print("Selected team: \(team.teamName)")
+            // Navigate to team details page
+        }
     }
 }
-    
-    // MARK: - UICollectionViewDelegateFlowLayout
-    extension LeagueDetailsViewController: UICollectionViewDelegateFlowLayout {
-        
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            if collectionView == upcomingEventsCollectionView {
-                return CGSize(width: 250, height: 100)
-            } else if collectionView == latestEventsCollectionView {
-                return CGSize(width: collectionView.frame.width - 32, height: 80)
-            } else if collectionView == teamsCollectionView {
-                return CGSize(width: 80, height: 100)
-            }
-            return CGSize.zero
-        }
-        
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            return UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
-        }
-    }
 
+// MARK: - UICollectionViewDelegateFlowLayout
+extension LeagueDetailsViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView == upcomingEventsCollectionView {
+            return CGSize(width: 250, height: 100)
+        } else if collectionView == latestEventsCollectionView {
+            return CGSize(width: collectionView.frame.width - 32, height: 80)
+        } else if collectionView == teamsCollectionView {
+            return CGSize(width: 80, height: 100)
+        }
+        return CGSize.zero
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 16, bottom: 10, right: 16)
+    }
+}

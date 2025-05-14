@@ -11,7 +11,6 @@ class UpcomingEventsCell: UICollectionViewCell {
     @IBOutlet weak var homeName: UILabel!
     @IBOutlet weak var awayName: UILabel!
     @IBOutlet weak var date: UILabel!
-    @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var homeImg: UIImageView!
     @IBOutlet weak var awayImg: UIImageView!
     
@@ -34,7 +33,6 @@ class UpcomingEventsCell: UICollectionViewCell {
         homeName.text = fixture.matchHometeamName
         awayName.text = fixture.matchAwayteamName
         date.text = formatDate(fixture.matchDate)
-        scoreLabel.text = "-" // For upcoming events, no score yet
         
         // Load images
         loadImage(from: fixture.teamHomeBadge, into: homeImg)
