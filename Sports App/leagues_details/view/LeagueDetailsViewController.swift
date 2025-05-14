@@ -281,8 +281,8 @@ extension LeagueDetailsViewController: UICollectionViewDataSource {
                     let team = teams[indexPath.item]
                     cell.teamName.text = team.teamName
                     
-//                    cell.teamImg.kf.setImage(with: URL(string: team.teamLogo ?? ""),
-//                                           placeholder: UIImage(named: "placeholder_team"))
+                    cell.teamImg.kf.setImage(with: URL(string: team.teamLogo ?? ""),
+                                           placeholder: UIImage(named: "placeholder_team"))
                 } else {
                     // Handle empty state
                     cell.teamName.text = "No teams"
