@@ -8,9 +8,9 @@
 import Alamofire
 import Foundation
 
-class LeaguesAPIService {
+class SportsAPIService {
     
-    static let shared = LeaguesAPIService()
+    static let shared = SportsAPIService()
     
     // API details - use your actual API key
     private let baseURL = "https://apiv2.allsportsapi.com"
@@ -44,6 +44,29 @@ class LeaguesAPIService {
         let parameters: [String: Any] = [
             "met": "Teams",
             "leagueId": leagueId,
+            "APIkey": apiKey
+        ]
+        
+        AF.request(endpoint, parameters: parameters)
+            .validate()
+            .responseDecodable(of: TeamsResponse.self) { response in
+                switch response.result {
+                case .success(let teamsResponse):
+                    completion(.success(teamsResponse.result))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            }
+    }
+    
+    // MARK: - Team Details in a League
+    func fetchTeam(inLeague leagueId: Int, teamId: Int, completion: @escaping (Result<[Team], Error>) -> Void) {
+        let endpoint = "\(baseURL)/football"
+        
+        let parameters: [String: Any] = [
+            "met": "Teams",
+            "leagueId": leagueId,
+            "teamId": teamId,
             "APIkey": apiKey
         ]
         
