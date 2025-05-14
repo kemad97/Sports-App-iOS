@@ -171,6 +171,11 @@
                             <constraint firstItem="pXb-tc-DAZ" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="60" id="PbZ-l6-U4y"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="latestEventsCollectionView" destination="Itq-8O-7XN" id="Unr-fc-iDF"/>
+                        <outlet property="teamsCollectionView" destination="gix-hX-tOP" id="ul7-Do-92b"/>
+                        <outlet property="upcomingEventsCollectionView" destination="pXb-tc-DAZ" id="Epd-BR-qaO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
