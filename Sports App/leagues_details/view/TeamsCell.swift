@@ -38,9 +38,9 @@ class TeamsCell: UICollectionViewCell {
         teamImg.backgroundColor = .clear
         
         // Configure label
-        teamName.textAlignment = .center
+        teamName.textAlignment = .left
         teamName.font = .systemFont(ofSize: 11)
-        teamName.numberOfLines = 1
+        teamName.numberOfLines = 2
         teamName.textColor = .label
         teamName.adjustsFontSizeToFitWidth = true
         teamName.minimumScaleFactor = 0.8
