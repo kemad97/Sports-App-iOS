@@ -15,7 +15,7 @@ class LeaguesPresenter{
     }
     
     func getLeagues(sport: String){
-        LeaguesAPIService.shared.fetchLeagues(sport: sport, completion: {[weak self] result in
+        SportsAPIService.shared.fetchLeagues(sport: sport, completion: {[weak self] result in
             switch result{
             case .success(let leagues):
                 self?.leaguesView?.displayLeagues(leagues)

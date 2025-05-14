@@ -5,10 +5,18 @@
 //  Created by Mustafa Hussain on 13/05/2025.
 //
 
+import Kingfisher
 import UIKit
 
+class TeamDetailsCollectionViewController: UICollectionViewController,
+    TeamDetailsView
+{
 
-class TeamDetailsCollectionViewController: UICollectionViewController {
+    var leagueId: Int?
+    var teamId: Int?
+
+    private var teamDetails: Team?
+    private var teamPresenter: TeamDetailsPresenter!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +32,17 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
             }
         }
         self.collectionView.setCollectionViewLayout(layout, animated: true)
+
+        //just for test
+        //provide this data to send request
+        leagueId = 10
+        teamId = 360
+        
+        guard let leagueId = leagueId, let teamId = teamId else { return }
+        
+        teamPresenter = TeamDetailsPresenter(view: self, reposatory: SportsReposatory(remoteDataSource: SportsAPIService()))
+        
+        teamPresenter.getTeamDetails(leagueId: leagueId, teamId: teamId)
     }
 
     func drawTeamSection() -> NSCollectionLayoutSection {
@@ -38,10 +57,10 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
         //groupsize
-
+        
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(200),
-            heightDimension: .absolute(230)
+            widthDimension: .absolute(355),
+            heightDimension: .absolute(244)
         )
 
         //group >> size , item
@@ -59,14 +78,12 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
 
         //section >> group
         let section = NSCollectionLayoutSection(group: myGroup)
-        section.orthogonalScrollingBehavior = .continuous
         section.contentInsets = NSDirectionalEdgeInsets(
-            top: 75,
+            top: 32,
             leading: 16,
             bottom: 16,
             trailing: 16
         )
-
         return section
     }
 
@@ -85,7 +102,7 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
 
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .absolute(200)
+            heightDimension: .absolute(100)
         )
 
         //group >> size , item
@@ -106,7 +123,7 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
         section.contentInsets = NSDirectionalEdgeInsets(
             top: 0,
             leading: 16,
-            bottom: 16,
+            bottom: 8,
             trailing: 16
         )
 
@@ -127,9 +144,9 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
         // #warning Incomplete implementation, return the number of items
         switch section {
         case 0:
-            return 1
+            return (teamDetails != nil) ? 1 : 0
         default:
-            return 10
+            return teamDetails?.players?.count ?? 0
         }
     }
 
@@ -156,6 +173,13 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
             ) as! TeamDetailsCollectionViewCell
 
         //fill cell data for team
+        cell.teamImage.kf.setImage(
+            with: URL(string: teamDetails?.teamLogo ?? ""),
+            placeholder: UIImage(named: "team_placeholder")
+        )
+
+        cell.teamName.text = teamDetails?.teamName ?? ""
+        cell.teamCoachName.text = "Coach: \(teamDetails?.coaches?[0].coachName ?? "")"
 
         return cell
     }
@@ -170,7 +194,28 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
             ) as! PlayerDetailsCollectionViewCell
 
         //fill cell data for player
+        cell.playerImage.kf.setImage(
+            with: URL(
+                string: teamDetails?.players?[indexPath.row].playerImage ?? ""
+            ),
+            placeholder: UIImage(named: "player_placeholder")
+        )
+        cell.playerName.text = teamDetails?.players?[indexPath.row].playerName ?? ""
+        let playerNumber = teamDetails?.players?[indexPath.row].playerNumber ?? "0"
+        cell.playerNumber.text = "#\(playerNumber)"
+        cell.playerPosition.text = teamDetails?.players?[indexPath.row].playerType ?? ""
 
         return cell
     }
+
+    func displayTeamDetails(teamDetails: Team) {
+        self.teamDetails = teamDetails
+        collectionView.reloadData()
+    }
+
+    func displayErrorMessage(message: String) {
+        print("Error: \(message)")
+        //show uialert to infort user there are an error happend
+    }
+
 }
