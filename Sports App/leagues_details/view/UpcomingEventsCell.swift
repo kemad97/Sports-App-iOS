@@ -30,13 +30,13 @@ class UpcomingEventsCell: UICollectionViewCell {
     }
     
     func configure(with fixture: Fixture) {
-        homeName.text = fixture.matchHometeamName
-        awayName.text = fixture.matchAwayteamName
-        date.text = formatDate(fixture.matchDate)
+        homeName.text = fixture.eventHomeTeam
+        awayName.text = fixture.eventAwayTeam
+        date.text = formatDate(fixture.eventDate)
         
         // Load images
-        loadImage(from: fixture.teamHomeBadge, into: homeImg)
-        loadImage(from: fixture.teamAwayBadge, into: awayImg)
+        loadImage(from: fixture.homeTeamLogo, into: homeImg)
+        loadImage(from: fixture.awayTeamLogo, into: awayImg)
     }
     
     private func formatDate(_ dateString: String) -> String {

@@ -115,7 +115,7 @@ class LeagueDetailsViewController: UIViewController {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
         let today = Date()
-        let futureDate = Calendar.current.date(byAdding: .day, value: 30, to: today)!
+        let futureDate = Calendar.current.date(byAdding: .day, value: 14, to: today)!
         
         let fromDate = dateFormatter.string(from: today)
         let toDate = dateFormatter.string(from: futureDate)
@@ -142,7 +142,7 @@ class LeagueDetailsViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         
-        let pastDate = Calendar.current.date(byAdding: .day, value: -30, to: Date())!
+        let pastDate = Calendar.current.date(byAdding: .day, value: -14, to: Date())!
         let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
         
         let fromDate = dateFormatter.string(from: pastDate)
@@ -215,13 +215,13 @@ extension LeagueDetailsViewController: UICollectionViewDataSource {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UpcomingEventsCell", for: indexPath) as? UpcomingEventsCell {
                 if !upcomingFixtures.isEmpty && indexPath.item < upcomingFixtures.count {
                     let fixture = upcomingFixtures[indexPath.item]
-                    cell.homeName.text = fixture.matchHometeamName
-                    cell.awayName.text = fixture.matchAwayteamName
-                    cell.date.text = fixture.matchDate
+                    cell.homeName.text = fixture.eventHomeTeam
+                    cell.awayName.text = fixture.eventAwayTeam
+                    cell.date.text = fixture.eventDate
                     
-                    cell.homeImg.kf.setImage(with: URL(string: fixture.teamHomeBadge ?? ""),
+                    cell.homeImg.kf.setImage(with: URL(string: fixture.homeTeamLogo ?? ""),
                                              placeholder: UIImage(named: "placeholder_team"))
-                    cell.awayImg.kf.setImage(with: URL(string: fixture.teamAwayBadge ?? ""),
+                    cell.awayImg.kf.setImage(with: URL(string: fixture.awayTeamLogo ?? ""),
                                              placeholder: UIImage(named: "placeholder_team"))
                 } else {
                     // Handle empty state
@@ -245,15 +245,15 @@ extension LeagueDetailsViewController: UICollectionViewDataSource {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LatestEventsCell", for: indexPath) as? LatestEventsCell {
                 if !latestFixtures.isEmpty && indexPath.item < latestFixtures.count {
                     let fixture = latestFixtures[indexPath.item]
-                    cell.homeName.text = fixture.matchHometeamName
-                    cell.awayName.text = fixture.matchAwayteamName
-                    cell.homeScore.text = fixture.goalsHomeTeam ?? "0"
-                    cell.awayScore.text = fixture.goalsAwayTeam ?? "0"
-                    cell.date.text = fixture.matchDate
+                    cell.homeName.text = fixture.homeTeamLogo
+                    cell.awayName.text = fixture.awayTeamLogo
+                    cell.homeScore.text = fixture.eventFinalResult ?? "0"
+                    cell.awayScore.text = fixture.eventFinalResult ?? "0"
+                    cell.date.text = fixture.eventDate
                     
-                    cell.homeImg.kf.setImage(with: URL(string: fixture.teamHomeBadge ?? ""),
+                    cell.homeImg.kf.setImage(with: URL(string: fixture.homeTeamLogo ?? ""),
                                            placeholder: UIImage(named: "placeholder_team"))
-                    cell.awayImg.kf.setImage(with: URL(string: fixture.teamAwayBadge ?? ""),
+                    cell.awayImg.kf.setImage(with: URL(string: fixture.awayTeamLogo ?? ""),
                                            placeholder: UIImage(named: "placeholder_team"))
                 } else {
                     // Handle empty state
