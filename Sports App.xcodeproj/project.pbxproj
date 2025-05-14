@@ -25,6 +25,8 @@
 		45E681312DD0F158006CB382 /* SportsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6812F2DD0F158006CB382 /* SportsViewController.swift */; };
 		45E681322DD0F158006CB382 /* SportsCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6812E2DD0F158006CB382 /* SportsCellTableViewCell.swift */; };
 		45E681332DD0F158006CB382 /* Sport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E6812D2DD0F158006CB382 /* Sport.swift */; };
+		E15CB6C22DD4940000E23498 /* UpcomingEventsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15CB6C12DD4940000E23498 /* UpcomingEventsCell.swift */; };
+		E15CB6C42DD498C900E23498 /* LeagueDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E15CB6C32DD498C900E23498 /* LeagueDetailsCollectionViewController.swift */; };
 		E167C3AA2DD4796000E6CAB2 /* LeagueDetails.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E167C3A92DD4796000E6CAB2 /* LeagueDetails.storyboard */; };
 		E168A3312DD12369009C0658 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E168A3302DD12369009C0658 /* Lottie */; };
 		E1715BC92DD2B386006A51D8 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1715BBE2DD2B386006A51D8 /* SplashViewController.swift */; };
@@ -78,6 +80,8 @@
 		45E6812D2DD0F158006CB382 /* Sport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sport.swift; sourceTree = "<group>"; };
 		45E6812E2DD0F158006CB382 /* SportsCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsCellTableViewCell.swift; sourceTree = "<group>"; };
 		45E6812F2DD0F158006CB382 /* SportsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SportsViewController.swift; sourceTree = "<group>"; };
+		E15CB6C12DD4940000E23498 /* UpcomingEventsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UpcomingEventsCell.swift; path = "Sports App/leagueDetails_screen/view/UpcomingEventsCell.swift"; sourceTree = SOURCE_ROOT; };
+		E15CB6C32DD498C900E23498 /* LeagueDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LeagueDetailsCollectionViewController.swift; path = "Sports App/leagueDetails_screen/view/LeagueDetailsCollectionViewController.swift"; sourceTree = SOURCE_ROOT; };
 		E167C3A92DD4796000E6CAB2 /* LeagueDetails.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = LeagueDetails.storyboard; path = "Sports App/model/data_source/entities/LeagueDetails.storyboard"; sourceTree = SOURCE_ROOT; };
 		E1715BBE2DD2B386006A51D8 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		E1715BC12DD2B386006A51D8 /* lottie.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = lottie.json; sourceTree = "<group>"; };
@@ -271,6 +275,8 @@
 			isa = PBXGroup;
 			children = (
 				E167C3A92DD4796000E6CAB2 /* LeagueDetails.storyboard */,
+				E15CB6C12DD4940000E23498 /* UpcomingEventsCell.swift */,
+				E15CB6C32DD498C900E23498 /* LeagueDetailsCollectionViewController.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -517,6 +523,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E15CB6C42DD498C900E23498 /* LeagueDetailsCollectionViewController.swift in Sources */,
 				E1B25F532DD08A2300D1A034 /* AppDelegate.swift in Sources */,
 				E1B25F5D2DD08A2300D1A034 /* Sports_App.xcdatamodeld in Sources */,
 				451B92BB2DD3B73500AE40F9 /* TeamDetailsCollectionViewCell.swift in Sources */,
@@ -535,6 +542,7 @@
 				451B91742DD372C600AE40F9 /* Responses.swift in Sources */,
 				451B91752DD372C600AE40F9 /* SportsAPIService.swift in Sources */,
 				451B91762DD372C600AE40F9 /* Entities.swift in Sources */,
+				E15CB6C22DD4940000E23498 /* UpcomingEventsCell.swift in Sources */,
 				E1B25F552DD08A2300D1A034 /* SceneDelegate.swift in Sources */,
 				E1715BC92DD2B386006A51D8 /* SplashViewController.swift in Sources */,
 			);
