@@ -111,32 +111,6 @@
             </objects>
             <point key="canvasLocation" x="953.43511450381675" y="-27.464788732394368"/>
         </scene>
-        <!--Favorite-->
-        <scene sceneID="OUd-tf-xBT">
-            <objects>
-                <viewController id="Tm1-R7-YcC" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="9ZO-aF-D1W">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="favorite screen" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BI9-Il-bhr">
-                                <rect key="frame" x="93" y="336" width="206" height="180"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="0nx-st-kSQ"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Favorite" image="favorite" id="KqF-Xh-y3V"/>
-                    <navigationItem key="navigationItem" id="0K5-v3-Jyv"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GGN-5m-Ei8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="953" y="696"/>
-        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="KcH-LW-1Uz">
             <objects>
@@ -152,7 +126,6 @@
                     </tabBar>
                     <connections>
                         <segue destination="BiS-1U-4II" kind="relationship" relationship="viewControllers" id="Gti-ze-H7V"/>
-                        <segue destination="Tm1-R7-YcC" kind="relationship" relationship="viewControllers" id="yPw-8t-ubQ"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vWC-A1-5XW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
