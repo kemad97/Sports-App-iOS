@@ -11,7 +11,7 @@ import CoreData
 
 class LeaguesLocalDataSource {
     
-    func addFavoriteLeagu(favoriteLeague: FavoriteLeagues, completion: @escaping (Result<Void, Error>) -> Void){
+    func addFavoriteLeagu(leagueKey: Int32, leagueName: String, leagueLogo: String, completion: @escaping (Result<Void, Error>) -> Void){
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
             completion(.failure(NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to add new favorite league"])))
             return
@@ -19,9 +19,9 @@ class LeaguesLocalDataSource {
         
         let context = appDelegate.persistentContainer.viewContext
         let league = FavoriteLeagues(context: context)
-        league.key = favoriteLeague.key
-        league.logo = favoriteLeague.logo
-        league.name = favoriteLeague.name
+        league.key = leagueKey
+        league.logo = leagueLogo
+        league.name = leagueName
         
         do {
             try context.save()

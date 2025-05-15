@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
     
@@ -15,7 +16,6 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Favorite leagues"
 
         favoritePresenter = FavoritePresenter(
             view: self,
@@ -62,8 +62,9 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
                 for: indexPath
             ) as! FavorteLeagueTableViewCell
 
-        cell.leagueImage.image = UIImage(named: "team_placeholder")
-        cell.leagueName.text = "league name"
+        cell.leagueImage.kf.setImage(with: URL(string: leagues[indexPath.row].logo ?? ""),
+                                     placeholder: UIImage(named: "leaguePlaceholder"))
+        cell.leagueName.text = leagues[indexPath.row].name
 
         return cell
     }
