@@ -69,33 +69,33 @@ struct Coach: Codable {
 }
 
 struct Fixture: Codable {
-    let matchId: Int
-    let leagueId: Int
+    let eventKey: Int
+    let eventDate: String
+    let eventTime: String
+    let eventHomeTeam: String
+    let eventAwayTeam: String
+    let homeTeamKey: Int
+    let awayTeamKey: Int
+    let homeTeamLogo: String?
+    let awayTeamLogo: String?
+    let eventFinalResult: String
     let leagueName: String
-    let matchDate: String
-    let matchTime: String
-    let matchHometeamId: Int
-    let matchHometeamName: String
-    let matchAwayteamId: Int
-    let matchAwayteamName: String
-    let teamHomeBadge: String?
-    let teamAwayBadge: String?
-    let goalsHomeTeam: String?
-    let goalsAwayTeam: String?
+    let leagueKey: Int
     
     enum CodingKeys: String, CodingKey {
-        case matchId = "match_id"
-        case leagueId = "league_id"
+        case eventKey = "event_key"
+        case eventDate = "event_date"
+        case eventTime = "event_time"
+        case eventHomeTeam = "event_home_team"
+        case eventAwayTeam = "event_away_team"
+        case homeTeamKey = "home_team_key"
+        case awayTeamKey = "away_team_key"
+        case homeTeamLogo = "home_team_logo"
+        case awayTeamLogo = "away_team_logo"
+        case eventFinalResult = "event_final_result"
         case leagueName = "league_name"
-        case matchDate = "match_date"
-        case matchTime = "match_time"
-        case matchHometeamId = "match_hometeam_id"
-        case matchHometeamName = "match_hometeam_name"
-        case matchAwayteamId = "match_awayteam_id"
-        case matchAwayteamName = "match_awayteam_name"
-        case teamHomeBadge = "team_home_badge"
-        case teamAwayBadge = "team_away_badge"
-        case goalsHomeTeam = "match_hometeam_score"
-        case goalsAwayTeam = "match_awayteam_score"
+        case leagueKey = "league_key"
+
     }
+
 }

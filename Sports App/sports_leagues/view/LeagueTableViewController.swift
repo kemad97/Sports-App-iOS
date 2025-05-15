@@ -67,4 +67,17 @@ class LeagueTableViewController: UITableViewController, LeaguesView {
         //Todo display error alert
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Load the view controller from another storyboard
+        let storyboard = UIStoryboard(name: "LeagueDetails", bundle: nil)
+        if let leagueDetailsVC = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as? LeagueCollectionViewController {
+            
+            leagueDetailsVC.league = leaguesList[indexPath.row]
+
+            navigationController?.pushViewController(leagueDetailsVC, animated: true)
+        } else {
+            print("Failed to instantiate LeagueDetailsViewController from LeagueDetailsViewController.storyboard")
+        }
+    }
+    
 }
