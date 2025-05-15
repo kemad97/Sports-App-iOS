@@ -8,11 +8,12 @@
 import Foundation
 
 class SportsReposatory{
-//    var localDataSource: LocalDataSource!
+    var localDataSource: LeaguesLocalDataSource!
     var remoteDataSource: SportsAPIService!
     
-    init(remoteDataSource: SportsAPIService!) {
+    init(remoteDataSource: SportsAPIService!, localDataSource: LeaguesLocalDataSource!) {
         self.remoteDataSource = remoteDataSource
+        self.localDataSource = localDataSource
     }
     
     func getTeamDetails(leagueId: Int, teamId: Int, completion: @escaping (Team?) -> Void){
@@ -25,6 +26,18 @@ class SportsReposatory{
                 completion(nil)
             }
         }
+    }
+    
+    func getFavoriteLeagues(completion: @escaping ([FavoriteLeagues]) -> Void){
+        localDataSource.getFavoriteLeagues(completion: {result in
+            switch result{
+            case .success(let favoriteLeagues):
+                completion(favoriteLeagues)
+            case .failure(let error):
+                print("Error: \(error.localizedDescription)")
+                completion([])
+            }
+        })
     }
     
 }
