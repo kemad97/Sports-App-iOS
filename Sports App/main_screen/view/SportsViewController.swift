@@ -7,9 +7,8 @@
 
 import UIKit
 
-class SportsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SportsViewController: UITableViewController {
     
-    @IBOutlet weak var sportsTableView: UITableView!
     private var sportsData: [Sport] = [
         Sport(id: 0, imagePath: "football_card_image", title: "Football"),
         Sport(id: 1, imagePath: "cricket_card_image", title: "Cricket"),
@@ -20,25 +19,30 @@ class SportsViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        sportsTableView.dataSource = self
-        sportsTableView.delegate = self
-        
+        let titleLabel = UILabel()
+            titleLabel.text = "Sports"
+            titleLabel.font = UIFont.boldSystemFont(ofSize: 32)
+            titleLabel.textAlignment = .center
+            titleLabel.backgroundColor = .systemBackground
+            titleLabel.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50)
+            
+            tableView.tableHeaderView = titleLabel
     }
     
     
-    func numberOfSections(in tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 185
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 160
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         sportsData.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! SportsCellTableViewCell
         
         cell.sportImage?.image = UIImage(named: sportsData[indexPath.row].imagePath)
@@ -54,7 +58,7 @@ class SportsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Load the view controller from another storyboard
         let storyboard = UIStoryboard(name: "SportsLeagues", bundle: nil)
         if let sportsVC = storyboard.instantiateViewController(withIdentifier: "LeagueTableViewController") as? LeagueTableViewController {

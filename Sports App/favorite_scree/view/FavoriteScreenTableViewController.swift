@@ -16,7 +16,16 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        let titleLabel = UILabel()
+            titleLabel.text = "Favorite Leagues"
+            titleLabel.font = UIFont.boldSystemFont(ofSize: 32)
+            titleLabel.textAlignment = .center
+            titleLabel.backgroundColor = .systemBackground
+            titleLabel.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50)
+            
+            tableView.tableHeaderView = titleLabel
+        
         favoritePresenter = FavoritePresenter(
             view: self,
             repo: SportsReposatory(

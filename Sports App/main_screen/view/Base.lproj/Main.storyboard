@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="9ek-l7-XnO">
-                                <rect key="frame" x="16" y="230.33333333333334" width="361" height="504.66666666666663"/>
+                                <rect key="frame" x="16" y="186.33333333333331" width="361" height="597.66666666666674"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="175" id="LKw-IJ-PAq" customClass="SportsCellTableViewCell" customModule="Sports_App" customModuleProvider="target">
@@ -78,7 +78,7 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sports" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pu8-QZ-Y8K">
-                                <rect key="frame" x="0.0" y="178.33333333333334" width="393" height="36"/>
+                                <rect key="frame" x="0.0" y="134.33333333333334" width="393" height="36"/>
                                 <color key="backgroundColor" red="0.015686274510000001" green="0.0" blue="0.1764705882" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="36" id="CD4-Og-DXd"/>
@@ -109,7 +109,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HnP-tn-bbI" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="953.43511450381675" y="-27.464788732394368"/>
+            <point key="canvasLocation" x="2056" y="661"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="KcH-LW-1Uz">
@@ -125,8 +125,8 @@
                         <color key="selectedImageTintColor" red="0.015686274510000001" green="0.0" blue="0.1764705882" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </tabBar>
                     <connections>
-                        <segue destination="BiS-1U-4II" kind="relationship" relationship="viewControllers" id="Gti-ze-H7V"/>
-                        <segue destination="VB2-bv-BiA" kind="relationship" relationship="viewControllers" id="ER0-rV-xJv"/>
+                        <segue destination="Uwj-Rd-sXi" kind="relationship" relationship="viewControllers" id="KFj-wb-l5K"/>
+                        <segue destination="VB2-bv-BiA" kind="relationship" relationship="viewControllers" id="goQ-48-OXn"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vWC-A1-5XW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -209,6 +209,71 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="w45-7l-L2A" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-844" y="335"/>
+        </scene>
+        <!--Sports-->
+        <scene sceneID="0Zh-09-MFq">
+            <objects>
+                <tableViewController id="Uwj-Rd-sXi" customClass="SportsViewController" customModule="Sports_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="vOp-w5-TM3">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="150" id="zLa-mD-Jo5" customClass="SportsCellTableViewCell" customModule="Sports_App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="393" height="150"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="zLa-mD-Jo5" id="RHu-W5-a7S">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="150"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="football_card_image" translatesAutoresizingMaskIntoConstraints="NO" id="Cxw-n4-Ygl">
+                                            <rect key="frame" x="20" y="0.0" width="357" height="150"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="150" id="BXA-W3-kkk"/>
+                                                <constraint firstAttribute="width" constant="357" id="SsO-bs-lTe"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Football" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P8c-yI-7gT">
+                                            <rect key="frame" x="40" y="102" width="321" height="36"/>
+                                            <color key="backgroundColor" red="0.015686274510000001" green="0.0" blue="0.1764705882" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="36" id="l40-NO-ts6"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                            <color key="textColor" systemColor="secondarySystemGroupedBackgroundColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="8"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Cxw-n4-Ygl" firstAttribute="top" secondItem="RHu-W5-a7S" secondAttribute="top" id="CuK-d2-0W5"/>
+                                        <constraint firstItem="P8c-yI-7gT" firstAttribute="leading" secondItem="RHu-W5-a7S" secondAttribute="leadingMargin" constant="20" id="J2X-eG-5np"/>
+                                        <constraint firstItem="Cxw-n4-Ygl" firstAttribute="leading" secondItem="RHu-W5-a7S" secondAttribute="leading" constant="20" symbolic="YES" id="OiF-Y2-yCR"/>
+                                        <constraint firstItem="P8c-yI-7gT" firstAttribute="bottom" secondItem="RHu-W5-a7S" secondAttribute="bottomMargin" id="c2P-gx-9J5"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="P8c-yI-7gT" secondAttribute="trailing" constant="12" id="u8w-q6-3UT"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="sportImage" destination="Cxw-n4-Ygl" id="7sP-Y9-dqe"/>
+                                    <outlet property="sportTitle" destination="P8c-yI-7gT" id="fob-uk-PUA"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Uwj-Rd-sXi" id="dJ5-O6-MYR"/>
+                            <outlet property="delegate" destination="Uwj-Rd-sXi" id="EPq-qk-iKn"/>
+                        </connections>
+                    </tableView>
+                    <tabBarItem key="tabBarItem" title="Sports" image="sports_icon" id="2GZ-T4-ye8"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bez-c3-yIv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="962.59541984732823" y="-48.591549295774648"/>
         </scene>
     </scenes>
     <resources>
