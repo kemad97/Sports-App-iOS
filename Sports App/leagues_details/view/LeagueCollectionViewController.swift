@@ -14,7 +14,7 @@ class LeagueCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        registerCells()
+        setupCollectionViewLayout()
         fetchData()
     }
     
@@ -46,13 +46,103 @@ class LeagueCollectionViewController: UICollectionViewController {
         }
     }
     
-    private func registerCells() {
-        // Register cells with collection view
-        collectionView.register(UpcomingEventsCell.self, forCellWithReuseIdentifier: "UpcomingEventsCell")
-        collectionView.register(LatestEventsCell.self, forCellWithReuseIdentifier: "LatestEventsCell")
-        collectionView.register(TeamsCell.self, forCellWithReuseIdentifier: "TeamsCell")
+    private func setupCollectionViewLayout() {
+           let layout = CustomCollectionViewLayout()
+           layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+           collectionView.collectionViewLayout = layout
+           
+           // Configure section specific layouts
+           collectionView.collectionViewLayout = createLayout()
+       }
+    
+    private func createLayout() -> UICollectionViewLayout {
+         return UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
+             switch sectionIndex {
+             case 0:
+                 // Horizontal scroll for upcoming events
+                 return self?.createHorizontalSection()
+             case 1:
+                 // Vertical scroll for latest events
+                 return self?.createVerticalSection()
+             case 2:
+                 // Horizontal scroll for teams
+                 return self?.createHorizontalTeamsSection()
+             default:
+                 return nil
+             }
+         }
+     }
+    
+    private func createHorizontalSection() -> NSCollectionLayoutSection {
+        // Item
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(250),
+            heightDimension: .absolute(100)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        // Group
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .estimated(250),
+            heightDimension: .absolute(100)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
+        section.interGroupSpacing = 10
+        
+        return section
     }
     
+    private func createVerticalSection() -> NSCollectionLayoutSection {
+        // Item
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(80)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        // Group
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(80)
+        )
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        
+        // Section
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
+        section.interGroupSpacing = 10
+        
+        return section
+    }
+
+    private func createHorizontalTeamsSection() -> NSCollectionLayoutSection {
+            // Item
+            let itemSize = NSCollectionLayoutSize(
+                widthDimension: .absolute(80),
+                heightDimension: .absolute(100)
+            )
+            let item = NSCollectionLayoutItem(layoutSize: itemSize)
+            
+            // Group
+            let groupSize = NSCollectionLayoutSize(
+                widthDimension: .estimated(80),
+                heightDimension: .absolute(100)
+            )
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+            
+            // Section
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .continuous
+            section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
+            section.interGroupSpacing = 16
+            
+            return section
+        }
     // MARK: - Data Fetching
     private func fetchData() {
         guard league != nil else { return }

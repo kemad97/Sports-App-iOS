@@ -86,7 +86,7 @@
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Nqk-ut-Wgt">
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Nqk-ut-Wgt">
                                         <rect key="frame" x="16" y="222" width="361" height="279"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -149,7 +149,7 @@
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gix-hX-tOP">
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gix-hX-tOP">
                                         <rect key="frame" x="22" y="545" width="355" height="162"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -395,24 +395,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xIL-sh-Zp7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3657.2519083969464" y="-35.211267605633807"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="A7c-IR-3Ps">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0DS-Bh-LST" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="n4G-XF-FNN" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Uao-PQ-rnx">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="WeQ-Jj-oVV"/>
-                    </connections>
-                </navigationController>
-            </objects>
-            <point key="canvasLocation" x="896.94656488549617" y="-37.323943661971832"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="P2q-hr-Y9o">
