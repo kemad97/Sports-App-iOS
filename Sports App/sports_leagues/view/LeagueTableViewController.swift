@@ -70,7 +70,7 @@ class LeagueTableViewController: UITableViewController, LeaguesView {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Load the view controller from another storyboard
         let storyboard = UIStoryboard(name: "LeagueDetails", bundle: nil)
-        if let leagueDetailsVC = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as? LeagueDetailsViewController {
+        if let leagueDetailsVC = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as? LeagueCollectionViewController {
             
             leagueDetailsVC.league = leaguesList[indexPath.row]
 

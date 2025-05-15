@@ -3,6 +3,7 @@ import Kingfisher
 
 class LeagueDetailsViewController: UIViewController {
     
+    @IBOutlet weak var scrollView: UIScrollView!
     // MARK: - Outlets
     @IBOutlet weak var upcomingEventsCollectionView: UICollectionView!
     @IBOutlet weak var latestEventsCollectionView: UICollectionView!
@@ -45,6 +46,11 @@ class LeagueDetailsViewController: UIViewController {
             target: self,
             action: #selector(toggleFavorite)
         )
+        
+        // Setup scroll view
+              scrollView.delegate = self
+              scrollView.showsVerticalScrollIndicator = true
+              scrollView.bounces = true
     }
     
     private func configureCollectionViews() {

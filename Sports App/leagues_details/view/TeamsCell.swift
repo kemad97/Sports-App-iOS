@@ -22,7 +22,7 @@ class TeamsCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         // Update layout if needed
-        teamImg.layer.cornerRadius = teamImg.frame.height / 2
+        //teamImg.layer.cornerRadius = teamImg.frame.height / 2
     }
     
     // MARK: - Setup
