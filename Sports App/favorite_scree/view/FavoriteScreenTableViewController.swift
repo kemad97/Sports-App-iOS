@@ -87,6 +87,13 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
         
         self.present(alert, animated: true, completion: nil)
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //if there an internet connection
+        //navigate to league details screen
+        //other wise show no internet connection allert
+        print("Row selected \(indexPath.row)")
+    }
 
     func displayFavorites(leagues: [FavoriteLeagues]) {
         self.leagues = leagues
