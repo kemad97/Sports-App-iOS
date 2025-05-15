@@ -1,11 +1,5 @@
-//
-//  TeamsCell.swift
-//  Sports App
-//
-//  Created by Kerolos on 14/05/2025.
-//
-
 import UIKit
+import Kingfisher
 
 class TeamsCell: UICollectionViewCell {
     
@@ -13,46 +7,29 @@ class TeamsCell: UICollectionViewCell {
     @IBOutlet weak var teamImg: UIImageView!
     @IBOutlet weak var teamName: UILabel!
     
-    // MARK: - Lifecycle
     override func awakeFromNib() {
         super.awakeFromNib()
         setupUI()
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        // Update layout if needed
-        //teamImg.layer.cornerRadius = teamImg.frame.height / 2
-    }
-    
-    // MARK: - Setup
     private func setupUI() {
-        // Cell customization
-        contentView.backgroundColor = .clear
-        backgroundColor = .clear
-        
-        // Configure imageView
+        // ImageView setup
         teamImg.contentMode = .scaleAspectFit
         teamImg.clipsToBounds = true
-        teamImg.translatesAutoresizingMaskIntoConstraints = false
         teamImg.backgroundColor = .clear
         
-        // Configure label
-        teamName.textAlignment = .left
+        // Label setup
         teamName.font = .systemFont(ofSize: 11)
+        teamName.textAlignment = .center
         teamName.numberOfLines = 2
-        teamName.textColor = .label
         teamName.adjustsFontSizeToFitWidth = true
         teamName.minimumScaleFactor = 0.8
-        teamName.translatesAutoresizingMaskIntoConstraints = false
         
-        // Add subtle animation on selection
-        let selectedBg = UIView()
-        selectedBg.backgroundColor = UIColor.systemGray6
-        selectedBackgroundView = selectedBg
+        // Cell setup
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
     }
     
-    // MARK: - Reuse
     override func prepareForReuse() {
         super.prepareForReuse()
         teamImg.image = nil
@@ -63,7 +40,7 @@ class TeamsCell: UICollectionViewCell {
     func configure(with team: Team) {
         teamName.text = team.teamName
         
-        // Add loading indicator while image loads
+        // Add loading indicator
         let activityIndicator = UIActivityIndicatorView(style: .medium)
         teamImg.addSubview(activityIndicator)
         activityIndicator.center = teamImg.center

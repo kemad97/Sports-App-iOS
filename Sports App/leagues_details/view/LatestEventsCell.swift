@@ -1,11 +1,5 @@
-//
-//  LatestEventsCell.swift
-//  Sports App
-//
-//  Created by Kerolos on 14/05/2025.
-//
-
 import UIKit
+import Kingfisher
 
 class LatestEventsCell: UICollectionViewCell {
     
@@ -18,15 +12,48 @@ class LatestEventsCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        setupUI()
+    }
+    
+    private func setupUI() {
+        // ImageViews setup
+        [homeImg, awayImg].forEach { imageView in
+            imageView?.contentMode = .scaleAspectFit
+            imageView?.clipsToBounds = true
+            imageView?.backgroundColor = .clear
+        }
         
-        // UI Customization
-        contentView.layer.cornerRadius = 10
-        contentView.layer.masksToBounds = true
+        // Labels setup
+        [homeName, awayName].forEach { label in
+            label?.font = .systemFont(ofSize: 12)
+            label?.textAlignment = .center
+            label?.numberOfLines = 1
+            label?.adjustsFontSizeToFitWidth = true
+            label?.minimumScaleFactor = 0.8
+        }
         
+        // Score label setup
+        finalScore.font = .systemFont(ofSize: 16, weight: .semibold)
+        finalScore.textAlignment = .center
+        
+        // Cell setup
+        backgroundColor = .systemBackground
+        contentView.backgroundColor = .systemBackground
+        
+        // Add subtle shadow
         layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 2)
-        layer.shadowRadius = 4
-        layer.shadowOpacity = 0.2
+        layer.shadowOffset = CGSize(width: 0, height: 1)
+        layer.shadowRadius = 2
+        layer.shadowOpacity = 0.1
         layer.masksToBounds = false
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        homeImg.image = nil
+        awayImg.image = nil
+        homeName.text = nil
+        awayName.text = nil
+        finalScore.text = nil
     }
 }
