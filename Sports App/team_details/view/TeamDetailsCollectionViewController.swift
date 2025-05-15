@@ -33,10 +33,6 @@ class TeamDetailsCollectionViewController: UICollectionViewController,
         }
         self.collectionView.setCollectionViewLayout(layout, animated: true)
 
-        //just for test
-        //provide this data to send request
-        leagueId = 10
-        teamId = 360
         
         guard let leagueId = leagueId, let teamId = teamId else { return }
         
