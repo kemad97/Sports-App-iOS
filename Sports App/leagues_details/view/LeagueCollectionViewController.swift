@@ -10,18 +10,36 @@ class LeagueCollectionViewController: UICollectionViewController {
     private var teams: [Team] = []
     private let activityIndicator = UIActivityIndicatorView(style: .large)
     
+    private let localDataSource = LeaguesLocalDataSource()
+    private var isFavorite = false
+    
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Register header
-              collectionView.register(
-                  SectionHeaderView.self,
-                  forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-                  withReuseIdentifier: SectionHeaderView.reuseIdentifier
-              )
+        collectionView.register(
+            SectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SectionHeaderView.reuseIdentifier
+        )
         setupUI()
         setupCollectionViewLayout()
+        checkIfFavorite()
         fetchData()
+    }
+    
+    private func checkIfFavorite() {
+        localDataSource.getFavoriteLeagues { [weak self] result in
+            switch result {
+            case .success(let favorites):
+                // Check if current league is in favorites
+                self?.isFavorite = favorites.contains { $0.key == (self?.league.leagueKey)! }
+                self?.updateFavoriteButton()
+            case .failure(let error):
+                print("Error fetching favorites: \(error)")
+            }
+        }
     }
     
     // MARK: - UI Setup
@@ -53,120 +71,120 @@ class LeagueCollectionViewController: UICollectionViewController {
     }
     
     private func setupCollectionViewLayout() {
-           let layout = CustomCollectionViewLayout()
-           layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-           collectionView.collectionViewLayout = layout
-           
-           // Configure section specific layouts
-           collectionView.collectionViewLayout = createLayout()
-       }
+        let layout = CustomCollectionViewLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        collectionView.collectionViewLayout = layout
+        
+        // Configure section specific layouts
+        collectionView.collectionViewLayout = createLayout()
+    }
     
     private func createLayout() -> UICollectionViewLayout {
-         return UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
-             switch sectionIndex {
-             case 0:
-                 // Horizontal scroll for upcoming events
-                 return self?.createUpcomingSection()
-             case 1:
-                 // Vertical scroll for latest events
-                 return self?.createLatestSection()
-             case 2:
-                 // Horizontal scroll for teams
-                 return self?.createTeamsSection()
-             default:
-                 return nil
-             }
-         }
-     }
+        return UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnvironment in
+            switch sectionIndex {
+            case 0:
+                // Horizontal scroll for upcoming events
+                return self?.createUpcomingSection()
+            case 1:
+                // Vertical scroll for latest events
+                return self?.createLatestSection()
+            case 2:
+                // Horizontal scroll for teams
+                return self?.createTeamsSection()
+            default:
+                return nil
+            }
+        }
+    }
     
     private func createUpcomingSection() -> NSCollectionLayoutSection {
-          let itemSize = NSCollectionLayoutSize(
-              widthDimension: .fractionalWidth(1),
-              heightDimension: .absolute(120)
-          )
-          let item = NSCollectionLayoutItem(layoutSize: itemSize)
-          
-          let groupSize = NSCollectionLayoutSize(
-              widthDimension: .fractionalWidth(0.9),
-              heightDimension: .absolute(120)
-          )
-          let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-          
-          let section = NSCollectionLayoutSection(group: group)
-          section.orthogonalScrollingBehavior = .groupPaging
-          section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 20, trailing: 16)
-          section.interGroupSpacing = 12
-          
-          // Add header
-          let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
-          let header = NSCollectionLayoutBoundarySupplementaryItem(
-              layoutSize: headerSize,
-              elementKind: UICollectionView.elementKindSectionHeader,
-              alignment: .top
-          )
-          section.boundarySupplementaryItems = [header]
-          
-          return section
-      }
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(120)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(0.9),
+            heightDimension: .absolute(120)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 20, trailing: 16)
+        section.interGroupSpacing = 12
+        
+        // Add header
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.boundarySupplementaryItems = [header]
+        
+        return section
+    }
     
     private func createLatestSection() -> NSCollectionLayoutSection {
-          let itemSize = NSCollectionLayoutSize(
-              widthDimension: .fractionalWidth(1),
-              heightDimension: .absolute(100)
-          )
-          let item = NSCollectionLayoutItem(layoutSize: itemSize)
-          
-          let groupSize = NSCollectionLayoutSize(
-              widthDimension: .fractionalWidth(1),
-              heightDimension: .absolute(100)
-          )
-          let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-          
-          let section = NSCollectionLayoutSection(group: group)
-          section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 20, trailing: 16)
-          section.interGroupSpacing = 16
-          
-          // Add header
-          let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
-          let header = NSCollectionLayoutBoundarySupplementaryItem(
-              layoutSize: headerSize,
-              elementKind: UICollectionView.elementKindSectionHeader,
-              alignment: .top
-          )
-          section.boundarySupplementaryItems = [header]
-          
-          return section
-      }
-
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(100)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .absolute(100)
+        )
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 20, trailing: 16)
+        section.interGroupSpacing = 16
+        
+        // Add header
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.boundarySupplementaryItems = [header]
+        
+        return section
+    }
+    
     private func createTeamsSection() -> NSCollectionLayoutSection {
-           let itemSize = NSCollectionLayoutSize(
-               widthDimension: .absolute(80),
-               heightDimension: .absolute(150)
-           )
-           let item = NSCollectionLayoutItem(layoutSize: itemSize)
-           
-           let groupSize = NSCollectionLayoutSize(
-               widthDimension: .absolute(80),
-               heightDimension: .absolute(150)
-           )
-           let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-           
-           let section = NSCollectionLayoutSection(group: group)
-           section.orthogonalScrollingBehavior = .continuous
-           section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 20, trailing: 16)
-           section.interGroupSpacing = 12
-           
-           // Add header
-           let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
-           let header = NSCollectionLayoutBoundarySupplementaryItem(
-               layoutSize: headerSize,
-               elementKind: UICollectionView.elementKindSectionHeader,
-               alignment: .top
-           )
-           section.boundarySupplementaryItems = [header]
-           
-           return section
-       }
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(80),
+            heightDimension: .absolute(150)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .absolute(80),
+            heightDimension: .absolute(150)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 20, trailing: 16)
+        section.interGroupSpacing = 12
+        
+        // Add header
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.boundarySupplementaryItems = [header]
+        
+        return section
+    }
     
     // MARK: - Data Fetching
     private func fetchData() {
@@ -244,10 +262,61 @@ class LeagueCollectionViewController: UICollectionViewController {
             completion()
         }
     }
+    private func updateFavoriteButton() {
+        let imageName = isFavorite ? "heart.fill" : "heart"
+        let button = UIBarButtonItem(
+            image: UIImage(systemName: imageName),
+            style: .plain,
+            target: self,
+            action: #selector(toggleFavorite)
+        )
+        button.tintColor = .systemRed  // Set the color to red
+        navigationItem.rightBarButtonItem = button
+    }
     
     @objc private func toggleFavorite() {
-        print("Favorite button tapped")
+        if isFavorite {
+            // Remove from favorites
+            localDataSource.getFavoriteLeagues { [weak self] result in
+                switch result {
+                case .success(let favorites):
+                    if let favoriteLeague = favorites.first(where: { $0.key == (self?.league.leagueKey)! }) {
+                        self?.localDataSource.deleteFavoriteLeague(favoriteLeague: favoriteLeague) { result in
+                            switch result {
+                            case .success:
+                                DispatchQueue.main.async {
+                                    self?.isFavorite = false
+                                    self?.updateFavoriteButton()
+                                }
+                            case .failure(let error):
+                                print("Error removing favorite: \(error)")
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    print("Error fetching favorites: \(error)")
+                }
+            }
+        } else {
+            // Add to favorites
+            localDataSource.addFavoriteLeagu(
+                leagueKey: Int32(league.leagueKey),
+                leagueName: league.leagueName,
+                leagueLogo: league.leagueLogo ?? ""
+            ) { [weak self] result in
+                switch result {
+                case .success:
+                    DispatchQueue.main.async {
+                        self?.isFavorite = true
+                        self?.updateFavoriteButton()
+                    }
+                case .failure(let error):
+                    print("Error adding favorite: \(error)")
+                }
+            }
+        }
     }
+    
 }
 
 // MARK: - UICollectionViewDataSource
