@@ -88,7 +88,7 @@ class SportsAPIService {
         
         let parameters: [String: Any] = [
             "met": "Fixtures",
-            "leagueid": leagueId,
+            "leagueId": leagueId,
             "from": from,  // Format: YYYY-MM-DD
             "to": to,      // Format: YYYY-MM-DD
             "APIkey": apiKey
