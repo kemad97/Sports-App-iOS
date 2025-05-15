@@ -28,6 +28,17 @@ class SportsReposatory{
         }
     }
     
+    func addFavoriteLeague(league: FavoriteLeagues, completion: @escaping(Bool)->Void){
+        localDataSource.addFavoriteLeagu(favoriteLeague: league, completion: {result in
+            switch result{
+            case .success():
+                completion(true)
+            case .failure(_):
+                completion(false)
+            }
+        })
+    }
+    
     func getFavoriteLeagues(completion: @escaping ([FavoriteLeagues]) -> Void){
         localDataSource.getFavoriteLeagues(completion: {result in
             switch result{
@@ -36,6 +47,17 @@ class SportsReposatory{
             case .failure(let error):
                 print("Error: \(error.localizedDescription)")
                 completion([])
+            }
+        })
+    }
+    
+    func deleteFavoriteLeague(league: FavoriteLeagues, completion: @escaping(Bool)->Void){
+        localDataSource.deleteFavoriteLeague(favoriteLeague: league, completion: {result in
+            switch result{
+            case .success():
+                completion(true)
+            case .failure(_):
+                completion(false)
             }
         })
     }
