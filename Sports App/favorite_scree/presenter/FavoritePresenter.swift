@@ -26,4 +26,15 @@ class FavoritePresenter{
         })
     }
     
+    
+    func deleteFavoriteLeague(favoriteLeague: FavoriteLeagues){
+        repo.deleteFavoriteLeague(league: favoriteLeague){[weak self] isDeleted in
+            if isDeleted{
+                self?.favoriteView.leagueDeleteSuccess()
+            }else{
+                self?.favoriteView.displayError(message: "Delete Favorite League Failed")
+            }
+        }
+    }
+    
 }

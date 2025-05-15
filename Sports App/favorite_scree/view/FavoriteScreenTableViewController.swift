@@ -8,6 +8,7 @@
 import UIKit
 
 class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
+    
 
     private var leagues: [FavoriteLeagues] = []
     private var favoritePresenter: FavoritePresenter!
@@ -72,7 +73,9 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
         
         // OK action
         let okAction = UIAlertAction(title: "OK", style: .default) {[weak self] _ in
-            favoritePresenter.deleteFavoriteLeague(favoriteLeague: self?.leagues[indexPath.row])
+            guard let leagues = self?.leagues else { return }
+            
+            self?.favoritePresenter.deleteFavoriteLeague(favoriteLeague: leagues[indexPath.row])
         }
         
         // Cancel action
@@ -89,7 +92,7 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
         self.tableView.reloadData()
     }
     
-    func leagueDeleted() {
+    func leagueDeleteSuccess() {
         favoritePresenter.getFavoriteLeagues()
     }
 
