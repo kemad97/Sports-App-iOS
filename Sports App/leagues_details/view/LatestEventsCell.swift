@@ -15,7 +15,6 @@ class LatestEventsCell: UICollectionViewCell {
     @IBOutlet weak var homeName: UILabel!
     @IBOutlet weak var awayName: UILabel!
     @IBOutlet weak var finalScore: UILabel!
-    @IBOutlet weak var date: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

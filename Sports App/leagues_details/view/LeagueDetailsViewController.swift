@@ -226,9 +226,9 @@ extension LeagueDetailsViewController: UICollectionViewDataSource {
                                              placeholder: UIImage(named: "placeholder_team"))
                 } else {
                     // Handle empty state
-                    cell.homeName.text = "No upcoming fixtures"
-                    cell.awayName.text = ""
-                    cell.date.text = ""
+                    cell.homeName.text = "-"
+                    cell.awayName.text = "-"
+                    cell.date.text = "-"
                     cell.homeImg.image = UIImage(named: "placeholder_team")
                     cell.awayImg.image = UIImage(named: "placeholder_team")
                 }
@@ -246,11 +246,11 @@ extension LeagueDetailsViewController: UICollectionViewDataSource {
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LatestEventsCell", for: indexPath) as? LatestEventsCell {
                 if !latestFixtures.isEmpty && indexPath.item < latestFixtures.count {
                     let fixture = latestFixtures[indexPath.item]
-                    cell.homeName.text = fixture.homeTeamLogo
-                    cell.awayName.text = fixture.awayTeamLogo
-                    cell.finalScore.text = fixture.eventFinalResult ?? "0 - 0"
+                    cell.homeName.text = fixture.eventHomeTeam
+                    cell.awayName.text = fixture.eventAwayTeam
+                    cell.finalScore.text = fixture.eventFinalResult
                    // cell.awayScore.text = fixture.eventFinalResult ?? "0"
-                    cell.date.text = fixture.eventDate
+                    //cell.date.text = fixture.eventDate
                     
                     cell.homeImg.kf.setImage(with: URL(string: fixture.homeTeamLogo ?? ""),
                                            placeholder: UIImage(named: "placeholder_team"))
@@ -261,7 +261,7 @@ extension LeagueDetailsViewController: UICollectionViewDataSource {
                     cell.homeName.text = "No recent fixtures"
                     cell.awayName.text = ""
                     cell.finalScore.text = ""
-                    cell.date.text = ""
+                   // cell.date.text = ""
                     cell.homeImg.image = UIImage(named: "placeholder_team")
                     cell.awayImg.image = UIImage(named: "placeholder_team")
                 }
