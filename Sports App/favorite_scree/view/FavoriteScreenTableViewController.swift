@@ -23,9 +23,12 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
                 localDataSource: LeaguesLocalDataSource()
             )
         )
-        favoritePresenter.getFavoriteLeagues()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        favoritePresenter.getFavoriteLeagues()
+    }
+    
     override func tableView(
         _ tableView: UITableView,
         heightForRowAt indexPath: IndexPath
@@ -63,10 +66,31 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
 
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let alert = UIAlertController(title: "Delete Favorite League!", message: "Are you sure you want to delete this favorite league?", preferredStyle: .alert)
+        
+        // OK action
+        let okAction = UIAlertAction(title: "OK", style: .default) {[weak self] _ in
+            favoritePresenter.deleteFavoriteLeague(favoriteLeague: self?.leagues[indexPath.row])
+        }
+        
+        // Cancel action
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(okAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
 
     func displayFavorites(leagues: [FavoriteLeagues]) {
         self.leagues = leagues
         self.tableView.reloadData()
+    }
+    
+    func leagueDeleted() {
+        favoritePresenter.getFavoriteLeagues()
     }
 
     func displayError(message: String) {

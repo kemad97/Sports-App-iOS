@@ -9,5 +9,6 @@ import Foundation
 
 protocol FavoriteView{
     func displayFavorites(leagues: [FavoriteLeagues])
+    func leagueDeleteSuccess()
     func displayError(message: String)
 }
