@@ -51,31 +51,32 @@ class LeagueDetailsViewController: UIViewController {
         // Setup delegates and data sources
         upcomingEventsCollectionView.delegate = self
         upcomingEventsCollectionView.dataSource = self
-        
         latestEventsCollectionView.delegate = self
         latestEventsCollectionView.dataSource = self
-        
         teamsCollectionView.delegate = self
         teamsCollectionView.dataSource = self
         
         // Configure flow layouts
         if let flowLayout = upcomingEventsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
-            flowLayout.itemSize = CGSize(width: 250, height: 100)
+            flowLayout.minimumInteritemSpacing = 10
+            flowLayout.minimumLineSpacing = 10
+            flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         }
         
         if let flowLayout = latestEventsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .vertical
-            flowLayout.itemSize = CGSize(width: view.frame.width - 32, height: 80)
+            flowLayout.minimumInteritemSpacing = 10
+            flowLayout.minimumLineSpacing = 10
+            flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         }
         
         if let flowLayout = teamsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.scrollDirection = .horizontal
-            flowLayout.itemSize = CGSize(width: 80, height: 100)
+            flowLayout.minimumInteritemSpacing = 16
+            flowLayout.minimumLineSpacing = 16
+            flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
         }
-        
-        // Important: Disable scrolling for Latest Events collection
-        latestEventsCollectionView.isScrollEnabled = false
     }
     
     // MARK: - Data Fetching
@@ -247,8 +248,8 @@ extension LeagueDetailsViewController: UICollectionViewDataSource {
                     let fixture = latestFixtures[indexPath.item]
                     cell.homeName.text = fixture.homeTeamLogo
                     cell.awayName.text = fixture.awayTeamLogo
-                    cell.homeScore.text = fixture.eventFinalResult ?? "0"
-                    cell.awayScore.text = fixture.eventFinalResult ?? "0"
+                    cell.finalScore.text = fixture.eventFinalResult ?? "0 - 0"
+                   // cell.awayScore.text = fixture.eventFinalResult ?? "0"
                     cell.date.text = fixture.eventDate
                     
                     cell.homeImg.kf.setImage(with: URL(string: fixture.homeTeamLogo ?? ""),
@@ -259,8 +260,7 @@ extension LeagueDetailsViewController: UICollectionViewDataSource {
                     // Handle empty state
                     cell.homeName.text = "No recent fixtures"
                     cell.awayName.text = ""
-                    cell.homeScore.text = ""
-                    cell.awayScore.text = ""
+                    cell.finalScore.text = ""
                     cell.date.text = ""
                     cell.homeImg.image = UIImage(named: "placeholder_team")
                     cell.awayImg.image = UIImage(named: "placeholder_team")
@@ -309,6 +309,16 @@ extension LeagueDetailsViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension LeagueDetailsViewController: UICollectionViewDelegate {
     
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        if collectionView == upcomingEventsCollectionView {
+//            return CGSize(width: 280, height: 120)
+//        } else if collectionView == latestEventsCollectionView {
+//            return CGSize(width: collectionView.bounds.width - 32, height: 100)
+//        } else if collectionView == teamsCollectionView {
+//            return CGSize(width: 100, height: 120)
+//        }
+//        return CGSize.zero
+//    }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == teamsCollectionView && !teams.isEmpty && indexPath.item < teams.count {
             let team = teams[indexPath.item]
