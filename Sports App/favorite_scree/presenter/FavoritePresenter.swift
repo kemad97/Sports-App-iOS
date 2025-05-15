@@ -18,11 +18,7 @@ class FavoritePresenter{
     
     func getFavoriteLeagues(){
         repo.getFavoriteLeagues(completion: {[weak self] favoriteLeagues in
-            if favoriteLeagues.isEmpty{
-                self?.favoriteView.displayError(message: "No Favorite Leagues Found")
-            }else{
-                self?.favoriteView.displayFavorites(leagues: favoriteLeagues)
-            }
+            self?.favoriteView.displayFavorites(leagues: favoriteLeagues)
         })
     }
     
