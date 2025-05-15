@@ -42,13 +42,13 @@ class LeagueCollectionViewController: UICollectionViewController {
         if let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout {
             flowLayout.minimumInteritemSpacing = 10
             flowLayout.minimumLineSpacing = 10
-            flowLayout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+            flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
     }
     
     private func setupCollectionViewLayout() {
            let layout = CustomCollectionViewLayout()
-           layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+           layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
            collectionView.collectionViewLayout = layout
            
            // Configure section specific layouts
@@ -76,22 +76,22 @@ class LeagueCollectionViewController: UICollectionViewController {
     private func createHorizontalSection() -> NSCollectionLayoutSection {
         // Item
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(250),
-            heightDimension: .absolute(100)
+            widthDimension: .absolute(350),
+            heightDimension: .absolute(120)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         // Group
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .estimated(250),
-            heightDimension: .absolute(100)
+            widthDimension: .estimated(350),
+            heightDimension: .absolute(120)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         // Section
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 20, trailing: 8)
         section.interGroupSpacing = 10
         
         return section
@@ -101,20 +101,20 @@ class LeagueCollectionViewController: UICollectionViewController {
         // Item
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(80)
+            heightDimension: .absolute(120)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         // Group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(80)
+            heightDimension: .absolute(120)
         )
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         // Section
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 8, bottom: 8, trailing: 8)
         section.interGroupSpacing = 10
         
         return section
@@ -123,14 +123,14 @@ class LeagueCollectionViewController: UICollectionViewController {
     private func createHorizontalTeamsSection() -> NSCollectionLayoutSection {
             // Item
             let itemSize = NSCollectionLayoutSize(
-                widthDimension: .absolute(80),
-                heightDimension: .absolute(100)
+                widthDimension: .absolute(90),
+                heightDimension: .absolute(140)
             )
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             
             // Group
             let groupSize = NSCollectionLayoutSize(
-                widthDimension: .estimated(80),
+                widthDimension: .estimated(90),
                 heightDimension: .absolute(100)
             )
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
@@ -138,8 +138,8 @@ class LeagueCollectionViewController: UICollectionViewController {
             // Section
             let section = NSCollectionLayoutSection(group: group)
             section.orthogonalScrollingBehavior = .continuous
-            section.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
-            section.interGroupSpacing = 16
+            section.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 8, bottom: 8, trailing: 8)
+            section.interGroupSpacing = 8
             
             return section
         }
