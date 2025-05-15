@@ -51,34 +51,13 @@ class SplashViewController: UIViewController {
     }
     
     private func navigateToMainApp() {
-        let navigationController =
-            UIStoryboard(name: "Main", bundle: nil)
-            .instantiateInitialViewController()
-            as! UINavigationController
-
-        guard
-            let tabBarController = navigationController.viewControllers.first
-                as? UITabBarController
-        else {
-            fatalError("Tab bar not found")
-        }
-
-        let favoriteVC = FavoriteScreenTableViewController.instantiateFromNib()
-        favoriteVC.tabBarItem = UITabBarItem(
-            title: "Favorite",
-            image: UIImage(named: "favorite"),
-            tag: 1
-        )
-
-        var viewControllers = tabBarController.viewControllers ?? []
-        viewControllers.append(favoriteVC)
-        tabBarController.viewControllers = viewControllers
-
-        navigationController.modalPresentationStyle = .fullScreen
-        navigationController.modalTransitionStyle = .flipHorizontal
-
+        let mainViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()!
+        
+        mainViewController.modalPresentationStyle = .fullScreen
+        mainViewController.modalTransitionStyle = .flipHorizontal
+        
         // Present main view controller
-        self.present(navigationController, animated: true)
+        self.present(mainViewController, animated: true)
     }
 }
     
