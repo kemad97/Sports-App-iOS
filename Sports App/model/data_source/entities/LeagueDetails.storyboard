@@ -342,34 +342,8 @@
                                     <outlet property="homeName" destination="wnu-zM-Pdg" id="0wZ-kl-2l8"/>
                                 </connections>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" reuseIdentifier="TeamsCell" id="2de-G6-WFG" customClass="TeamsCell" customModule="Sports_App" customModuleProvider="target">
-                                <rect key="frame" x="44" y="166.66666666666666" width="305" height="123"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="E6S-uZ-oyn">
-                                    <rect key="frame" x="0.0" y="0.0" width="305" height="123"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SeW-2e-e4l">
-                                            <rect key="frame" x="11" y="11" width="63" height="61"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TeamName" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b0e-Pd-Cas">
-                                            <rect key="frame" x="4" y="73" width="77.333333333333329" height="25"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </collectionViewCellContentView>
-                                <size key="customSize" width="305" height="123"/>
-                                <connections>
-                                    <outlet property="teamImg" destination="SeW-2e-e4l" id="lA5-ou-r0j"/>
-                                    <outlet property="teamName" destination="b0e-Pd-Cas" id="DlR-lT-BvQ"/>
-                                </connections>
-                            </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" reuseIdentifier="LatestEventsCell" id="bUH-FJ-xjh" customClass="LatestEventsCell" customModule="Sports_App" customModuleProvider="target">
-                                <rect key="frame" x="31" y="299.66666666666669" width="331" height="262"/>
+                                <rect key="frame" x="31" y="166.66666666666666" width="331" height="262"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="pmU-Ec-MqJ">
                                     <rect key="frame" x="0.0" y="0.0" width="331" height="262"/>
@@ -436,6 +410,32 @@
                                     <outlet property="finalScore" destination="G6l-pw-7tc" id="Gez-6e-qJZ"/>
                                     <outlet property="homeImg" destination="dek-nu-t78" id="jK1-5v-9Fz"/>
                                     <outlet property="homeName" destination="hbg-pX-tBO" id="mu1-1o-01e"/>
+                                </connections>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" reuseIdentifier="TeamsCell" id="2de-G6-WFG" customClass="TeamsCell" customModule="Sports_App" customModuleProvider="target">
+                                <rect key="frame" x="44" y="438.66666666666669" width="305" height="123"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="E6S-uZ-oyn">
+                                    <rect key="frame" x="0.0" y="0.0" width="305" height="123"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SeW-2e-e4l">
+                                            <rect key="frame" x="11" y="11" width="63" height="61"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TeamName" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b0e-Pd-Cas">
+                                            <rect key="frame" x="4" y="73" width="77.333333333333329" height="25"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </collectionViewCellContentView>
+                                <size key="customSize" width="305" height="123"/>
+                                <connections>
+                                    <outlet property="teamImg" destination="SeW-2e-e4l" id="lA5-ou-r0j"/>
+                                    <outlet property="teamName" destination="b0e-Pd-Cas" id="DlR-lT-BvQ"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
