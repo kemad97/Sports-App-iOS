@@ -292,25 +292,28 @@ extension LeagueCollectionViewController {
         switch indexPath.section {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UpcomingEventsCell", for: indexPath) as! UpcomingEventsCell
-            if !upcomingFixtures.isEmpty {
-                let fixture = upcomingFixtures[indexPath.item]
-                configureUpcomingCell(cell, with: fixture)
+            if upcomingFixtures.isEmpty {
+                configureUpcomingCell(cell, with: nil)  // Pass nil to trigger empty state
+            } else {
+                configureUpcomingCell(cell, with: upcomingFixtures[indexPath.item])
             }
             return cell
             
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LatestEventsCell", for: indexPath) as! LatestEventsCell
-            if !latestFixtures.isEmpty {
-                let fixture = latestFixtures[indexPath.item]
-                configureLatestCell(cell, with: fixture)
+            if latestFixtures.isEmpty {
+                configureLatestCell(cell, with: nil)  // Pass nil to trigger empty state
+            } else {
+                configureLatestCell(cell, with: latestFixtures[indexPath.item])
             }
             return cell
             
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TeamsCell", for: indexPath) as! TeamsCell
-            if !teams.isEmpty {
-                let team = teams[indexPath.item]
-                configureTeamCell(cell, with: team)
+            if teams.isEmpty {
+                configureTeamCell(cell, with: nil)  // Pass nil to trigger empty state
+            } else {
+                configureTeamCell(cell, with: teams[indexPath.item])
             }
             return cell
             
@@ -339,42 +342,71 @@ extension LeagueCollectionViewController {
         return UICollectionReusableView()
     }
     
-    private func configureUpcomingCell(_ cell: UpcomingEventsCell, with fixture: Fixture) {
-        cell.homeName.text = fixture.eventHomeTeam
-        cell.awayName.text = fixture.eventAwayTeam
-        cell.date.text = fixture.eventDate
-        
-        cell.homeImg.kf.setImage(
-            with: URL(string: fixture.homeTeamLogo ?? ""),
-            placeholder: UIImage(named: "placeholder_team")
-        )
-        cell.awayImg.kf.setImage(
-            with: URL(string: fixture.awayTeamLogo ?? ""),
-            placeholder: UIImage(named: "placeholder_team")
-        )
+    private func configureUpcomingCell(_ cell: UpcomingEventsCell, with fixture: Fixture?) {
+        // If fixture is nil, show placeholder content
+        if let fixture = fixture {
+            // Normal case - we have data
+            cell.homeName.text = fixture.eventHomeTeam
+            cell.awayName.text = fixture.eventAwayTeam
+            cell.date.text = fixture.eventDate
+            
+            cell.homeImg.kf.setImage(
+                with: URL(string: fixture.homeTeamLogo ?? ""),
+                placeholder: UIImage(named: "team_placeholder")
+            )
+            cell.awayImg.kf.setImage(
+                with: URL(string: fixture.awayTeamLogo ?? ""),
+                placeholder: UIImage(named: "team_placeholder")
+            )
+        } else {
+            // Empty state with placeholder content
+            cell.homeImg.image = UIImage(named: "team_placeholder")
+            cell.awayImg.image = UIImage(named: "team_placeholder")
+            cell.homeName.text = ""
+            cell.awayName.text = ""
+            cell.date.text = "Check back later"
+        }
     }
     
-    private func configureLatestCell(_ cell: LatestEventsCell, with fixture: Fixture) {
-        cell.homeName.text = fixture.eventHomeTeam
-        cell.awayName.text = fixture.eventAwayTeam
-        cell.finalScore.text = fixture.eventFinalResult
-        
-        cell.homeImg.kf.setImage(
-            with: URL(string: fixture.homeTeamLogo ?? ""),
-            placeholder: UIImage(named: "placeholder_team")
-        )
-        cell.awayImg.kf.setImage(
-            with: URL(string: fixture.awayTeamLogo ?? ""),
-            placeholder: UIImage(named: "placeholder_team")
-        )
+    private func configureLatestCell(_ cell: LatestEventsCell, with fixture: Fixture?) {
+        if let fixture = fixture {
+            // Normal case - we have data
+            cell.homeName.text = fixture.eventHomeTeam
+            cell.awayName.text = fixture.eventAwayTeam
+            cell.finalScore.text = fixture.eventFinalResult
+            
+            cell.homeImg.kf.setImage(
+                with: URL(string: fixture.homeTeamLogo ?? ""),
+                placeholder: UIImage(named: "team_placeholder")
+            )
+            cell.awayImg.kf.setImage(
+                with: URL(string: fixture.awayTeamLogo ?? ""),
+                placeholder: UIImage(named: "team_placeholder")
+            )
+        } else {
+            // Empty state
+            cell.homeImg.image = UIImage(named: "team_placeholder")
+            cell.awayImg.image = UIImage(named: "team_placeholder")
+            cell.homeName.text = "No recent"
+            cell.awayName.text = "matches"
+            cell.finalScore.text = "0 - 0"
+        }
     }
     
-    private func configureTeamCell(_ cell: TeamsCell, with team: Team) {
-        cell.teamName.text = team.teamName
-        cell.teamImg.kf.setImage(
-            with: URL(string: team.teamLogo ?? ""),
-            placeholder: UIImage(named: "placeholder_team")
-        )
+    private func configureTeamCell(_ cell: TeamsCell, with team: Team?) {
+        if let team = team {
+            // Normal case - we have data
+            cell.teamName.text = team.teamName
+            
+            cell.teamImg.kf.setImage(
+                with: URL(string: team.teamLogo ?? ""),
+                placeholder: UIImage(named: "team_placeholder")
+            )
+        } else {
+            // Empty state
+            cell.teamImg.image = UIImage(named: "team_placeholder")
+            cell.teamName.text = "No teams found"
+        }
     }
 }
 
