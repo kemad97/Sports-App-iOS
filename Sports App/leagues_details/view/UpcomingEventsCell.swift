@@ -12,6 +12,18 @@ class UpcomingEventsCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        // Setup for skeleton
+        isSkeletonable = true
+        contentView.isSkeletonable = true
+        
+        // Make each component skeletonable
+        homeImg.isSkeletonable = true
+        awayImg.isSkeletonable = true
+        homeName.isSkeletonable = true
+        awayName.isSkeletonable=true
+        date.isSkeletonable=true
+        
         setupUI()
     }
     
@@ -51,10 +63,11 @@ class UpcomingEventsCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        homeImg.image = nil
-        awayImg.image = nil
-        homeName.text = nil
-        awayName.text = nil
-        date.text = nil
+        homeImg.image = UIImage(named: "placeholder_team")
+        awayImg.image = UIImage(named: "placeholder_team")
+        homeName.text = ""
+        awayName.text = ""
+        date.text = ""
     }
+    
 }

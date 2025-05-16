@@ -9,9 +9,9 @@ import Foundation
 
 class TeamDetailsPresenter {
     var teamDetailsView: TeamDetailsView?
-    var reposatory: SportsReposatory!
+    var reposatory: SportsRepository!
 
-    init(view: TeamDetailsView, reposatory: SportsReposatory) {
+    init(view: TeamDetailsView, reposatory: SportsRepository) {
         self.teamDetailsView = view
         self.reposatory = reposatory
     }

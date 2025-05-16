@@ -7,7 +7,7 @@
 
 import Foundation
 
-class SportsReposatory{
+class SportsRepository{
     var localDataSource: LeaguesLocalDataSource!
     var remoteDataSource: SportsAPIService!
     

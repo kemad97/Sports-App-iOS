@@ -12,6 +12,18 @@ class LatestEventsCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        // Setup for skeleton
+           isSkeletonable = true
+           contentView.isSkeletonable = true
+           
+           // Make each component skeletonable
+           homeImg.isSkeletonable = true
+           awayImg.isSkeletonable = true
+           homeName.isSkeletonable = true
+           awayName.isSkeletonable = true
+        finalScore.isSkeletonable=true
+        
         setupUI()
     }
     
@@ -27,9 +39,9 @@ class LatestEventsCell: UICollectionViewCell {
         [homeName, awayName].forEach { label in
             label?.font = .systemFont(ofSize: 12)
             label?.textAlignment = .center
-            label?.numberOfLines = 1
+            label?.numberOfLines = 2
             label?.adjustsFontSizeToFitWidth = true
-            label?.minimumScaleFactor = 0.8
+            label?.minimumScaleFactor = 0.7
         }
         
         // Score label setup

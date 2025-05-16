@@ -1,73 +1,130 @@
 import UIKit
+import SkeletonView
 import Kingfisher
 
-class LeagueCollectionViewController: UICollectionViewController {
+class LeagueCollectionViewController: UICollectionViewController ,LeagueDetailsView , SkeletonCollectionViewDataSource{
+    
+   
     
     // MARK: - Properties
     var league: League!
     private var upcomingFixtures: [Fixture] = []
     private var latestFixtures: [Fixture] = []
     private var teams: [Team] = []
-    private let activityIndicator = UIActivityIndicatorView(style: .large)
-    
-    private let localDataSource = LeaguesLocalDataSource()
-    private var isFavorite = false
+    private var presenter: LeagueDetailsPresenter!
+
     
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
-        super.viewDidLoad()
-        // Register header
-        collectionView.register(
-            SectionHeaderView.self,
-            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-            withReuseIdentifier: SectionHeaderView.reuseIdentifier
-        )
-        setupUI()
-        setupCollectionViewLayout()
-        checkIfFavorite()
-        fetchData()
+          super.viewDidLoad()
+          
+          // Setup presenter
+          let localDataSource = LeaguesLocalDataSource()
+          let remoteDataSource = SportsAPIService.shared
+          let repository = SportsRepository(remoteDataSource: remoteDataSource, localDataSource: localDataSource)
+        presenter = LeagueDetailsPresenter(view:self,repository: repository, league: league)
+          
+          // Setup skeleton
+          setupSkeletonView()
+          
+          // Register header
+          collectionView.register(
+              SectionHeaderView.self,
+              forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+              withReuseIdentifier: SectionHeaderView.reuseIdentifier
+          )
+          
+          setupUI()
+          setupCollectionViewLayout()
+          
+          // Start loading data
+          presenter.viewDidLoad()
+      }
+    
+
+    
+    private func setupSkeletonView() {
+        // Make collection view skeletonable
+        collectionView.isSkeletonable = true
+        
+        // Set up skeleton appearance
+        SkeletonAppearance.default.multilineHeight = 15
+        SkeletonAppearance.default.multilineSpacing = 10
+        SkeletonAppearance.default.multilineLastLineFillPercent = 80
+        SkeletonAppearance.default.gradient = SkeletonGradient(baseColor: .systemGray6)
     }
     
-    private func checkIfFavorite() {
-        localDataSource.getFavoriteLeagues { [weak self] result in
-            switch result {
-            case .success(let favorites):
-                // Check if current league is in favorites
-                self?.isFavorite = favorites.contains { $0.key == (self?.league.leagueKey)! }
-                self?.updateFavoriteButton()
-            case .failure(let error):
-                print("Error fetching favorites: \(error)")
+    // MARK: - LeagueDetailsView Protocol Methods
+      func showSkeleton() {
+          DispatchQueue.main.async {
+              let gradient = SkeletonGradient(baseColor: .systemGray6)
+              self.collectionView.showAnimatedGradientSkeleton(usingGradient: gradient)
+          }
+      }
+      
+      func hideSkeleton() {
+          DispatchQueue.main.async {
+              self.collectionView.hideSkeleton(reloadDataAfter: true)
+          }
+      }
+    
+    
+    
+    func updateUI(upcomingFixtures: [Fixture], latestFixtures: [Fixture], teams: [Team]) {
+            self.upcomingFixtures = upcomingFixtures
+            self.latestFixtures = latestFixtures
+            self.teams = teams
+            
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
             }
         }
-    }
+    func showError(message: String) {
+           DispatchQueue.main.async {
+               let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+               alert.addAction(UIAlertAction(title: "OK", style: .default))
+               self.present(alert, animated: true)
+           }
+       }
     
+    func navigateToTeamDetails(team: Team) {
+            // Implement navigation to team details screen
+            print("Navigate to team: \(team.teamName)")
+        }
+    
+    func updateFavoriteButton(isFavorite: Bool) {
+           DispatchQueue.main.async {
+               let imageName = isFavorite ? "heart.fill" : "heart"
+               let button = UIBarButtonItem(
+                   image: UIImage(systemName: imageName),
+                   style: .plain,
+                   target: self,
+                   action: #selector(self.toggleFavorite)
+               )
+               button.tintColor = .systemRed
+               self.navigationItem.rightBarButtonItem = button
+           }
+       }
+    
+    @objc private func toggleFavorite() {
+          presenter.toggleFavorite()
+      }
     // MARK: - UI Setup
     private func setupUI() {
         title = league?.leagueName ?? "League Details"
         
-        // Setup activity indicator
-        activityIndicator.center = view.center
-        activityIndicator.hidesWhenStopped = true
-        view.addSubview(activityIndicator)
-        
         // Configure collection view
         collectionView.backgroundColor = .systemBackground
         
-        // Add favorite button
+        // Add favorite button (will be updated by presenter)
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "heart"),
             style: .plain,
             target: self,
             action: #selector(toggleFavorite)
         )
-        
-        // Configure flow layout
-        if let flowLayout = collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.minimumInteritemSpacing = 10
-            flowLayout.minimumLineSpacing = 10
-            flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        }
+        navigationItem.rightBarButtonItem?.tintColor = .systemRed
     }
     
     private func setupCollectionViewLayout() {
@@ -130,18 +187,18 @@ class LeagueCollectionViewController: UICollectionViewController {
     private func createLatestSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .absolute(100)
+            heightDimension: .absolute(85)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1),
-            heightDimension: .absolute(100)
+            heightDimension: .absolute(85)
         )
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 20, trailing: 16)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 8, bottom: 16, trailing: 8)
         section.interGroupSpacing = 16
         
         // Add header
@@ -186,137 +243,34 @@ class LeagueCollectionViewController: UICollectionViewController {
         return section
     }
     
-    // MARK: - Data Fetching
-    private func fetchData() {
-        guard league != nil else { return }
-        
-        activityIndicator.startAnimating()
-        
-        let group = DispatchGroup()
-        
-        group.enter()
-        fetchUpcomingFixtures { group.leave() }
-        
-        group.enter()
-        fetchLatestFixtures { group.leave() }
-        
-        group.enter()
-        fetchTeams { group.leave() }
-        
-        group.notify(queue: .main) { [weak self] in
-            self?.activityIndicator.stopAnimating()
-            self?.collectionView.reloadData()
-        }
-    }
+    // MARK: - SkeletonCollectionViewDataSource
+     func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+         switch indexPath.section {
+         case 0:
+             return "UpcomingEventsCell"
+         case 1:
+             return "LatestEventsCell"
+         case 2:
+             return "TeamsCell"
+         default:
+             return "BasicCell"
+         }
+     }
+     
+     func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+         switch section {
+         case 0: return 2
+         case 1: return 3
+         case 2: return 4
+         default: return 0
+         }
+     }
+     
+     func numSections(in collectionSkeletonView: UICollectionView) -> Int {
+         return 3
+     }
     
-    private func fetchUpcomingFixtures(completion: @escaping () -> Void) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
         
-        let today = Date()
-        let futureDate = Calendar.current.date(byAdding: .day, value: 14, to: today)!
-        
-        let fromDate = dateFormatter.string(from: today)
-        let toDate = dateFormatter.string(from: futureDate)
-        
-        SportsAPIService.shared.fetchFixtures(leagueId: league.leagueKey, from: fromDate, to: toDate) { [weak self] result in
-            switch result {
-            case .success(let fixtures):
-                self?.upcomingFixtures = fixtures
-            case .failure(let error):
-                print("Error fetching upcoming fixtures: \(error)")
-            }
-            completion()
-        }
-    }
-    
-    private func fetchLatestFixtures(completion: @escaping () -> Void) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        let pastDate = Calendar.current.date(byAdding: .day, value: -14, to: Date())!
-        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-        
-        let fromDate = dateFormatter.string(from: pastDate)
-        let toDate = dateFormatter.string(from: yesterday)
-        
-        SportsAPIService.shared.fetchFixtures(leagueId: league.leagueKey, from: fromDate, to: toDate) { [weak self] result in
-            switch result {
-            case .success(let fixtures):
-                self?.latestFixtures = fixtures
-            case .failure(let error):
-                print("Error fetching latest fixtures: \(error)")
-            }
-            completion()
-        }
-    }
-    
-    private func fetchTeams(completion: @escaping () -> Void) {
-        SportsAPIService.shared.fetchTeams(inLeague: league.leagueKey) { [weak self] result in
-            switch result {
-            case .success(let teams):
-                self?.teams = teams
-            case .failure(let error):
-                print("Error fetching teams: \(error)")
-            }
-            completion()
-        }
-    }
-    private func updateFavoriteButton() {
-        let imageName = isFavorite ? "heart.fill" : "heart"
-        let button = UIBarButtonItem(
-            image: UIImage(systemName: imageName),
-            style: .plain,
-            target: self,
-            action: #selector(toggleFavorite)
-        )
-        button.tintColor = .systemRed  // Set the color to red
-        navigationItem.rightBarButtonItem = button
-    }
-    
-    @objc private func toggleFavorite() {
-        if isFavorite {
-            // Remove from favorites
-            localDataSource.getFavoriteLeagues { [weak self] result in
-                switch result {
-                case .success(let favorites):
-                    if let favoriteLeague = favorites.first(where: { $0.key == (self?.league.leagueKey)! }) {
-                        self?.localDataSource.deleteFavoriteLeague(favoriteLeague: favoriteLeague) { result in
-                            switch result {
-                            case .success:
-                                DispatchQueue.main.async {
-                                    self?.isFavorite = false
-                                    self?.updateFavoriteButton()
-                                }
-                            case .failure(let error):
-                                print("Error removing favorite: \(error)")
-                            }
-                        }
-                    }
-                case .failure(let error):
-                    print("Error fetching favorites: \(error)")
-                }
-            }
-        } else {
-            // Add to favorites
-            localDataSource.addFavoriteLeagu(
-                leagueKey: Int32(league.leagueKey),
-                leagueName: league.leagueName,
-                leagueLogo: league.leagueLogo ?? ""
-            ) { [weak self] result in
-                switch result {
-                case .success:
-                    DispatchQueue.main.async {
-                        self?.isFavorite = true
-                        self?.updateFavoriteButton()
-                    }
-                case .failure(let error):
-                    print("Error adding favorite: \(error)")
-                }
-            }
-        }
-    }
-    
 }
 
 // MARK: - UICollectionViewDataSource
@@ -338,25 +292,28 @@ extension LeagueCollectionViewController {
         switch indexPath.section {
         case 0:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UpcomingEventsCell", for: indexPath) as! UpcomingEventsCell
-            if !upcomingFixtures.isEmpty {
-                let fixture = upcomingFixtures[indexPath.item]
-                configureUpcomingCell(cell, with: fixture)
+            if upcomingFixtures.isEmpty {
+                configureUpcomingCell(cell, with: nil)  // Pass nil to trigger empty state
+            } else {
+                configureUpcomingCell(cell, with: upcomingFixtures[indexPath.item])
             }
             return cell
             
         case 1:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LatestEventsCell", for: indexPath) as! LatestEventsCell
-            if !latestFixtures.isEmpty {
-                let fixture = latestFixtures[indexPath.item]
-                configureLatestCell(cell, with: fixture)
+            if latestFixtures.isEmpty {
+                configureLatestCell(cell, with: nil)  // Pass nil to trigger empty state
+            } else {
+                configureLatestCell(cell, with: latestFixtures[indexPath.item])
             }
             return cell
             
         case 2:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TeamsCell", for: indexPath) as! TeamsCell
-            if !teams.isEmpty {
-                let team = teams[indexPath.item]
-                configureTeamCell(cell, with: team)
+            if teams.isEmpty {
+                configureTeamCell(cell, with: nil)  // Pass nil to trigger empty state
+            } else {
+                configureTeamCell(cell, with: teams[indexPath.item])
             }
             return cell
             
@@ -385,42 +342,71 @@ extension LeagueCollectionViewController {
         return UICollectionReusableView()
     }
     
-    private func configureUpcomingCell(_ cell: UpcomingEventsCell, with fixture: Fixture) {
-        cell.homeName.text = fixture.eventHomeTeam
-        cell.awayName.text = fixture.eventAwayTeam
-        cell.date.text = fixture.eventDate
-        
-        cell.homeImg.kf.setImage(
-            with: URL(string: fixture.homeTeamLogo ?? ""),
-            placeholder: UIImage(named: "placeholder_team")
-        )
-        cell.awayImg.kf.setImage(
-            with: URL(string: fixture.awayTeamLogo ?? ""),
-            placeholder: UIImage(named: "placeholder_team")
-        )
+    private func configureUpcomingCell(_ cell: UpcomingEventsCell, with fixture: Fixture?) {
+        // If fixture is nil, show placeholder content
+        if let fixture = fixture {
+            // Normal case - we have data
+            cell.homeName.text = fixture.eventHomeTeam
+            cell.awayName.text = fixture.eventAwayTeam
+            cell.date.text = fixture.eventDate
+            
+            cell.homeImg.kf.setImage(
+                with: URL(string: fixture.homeTeamLogo ?? ""),
+                placeholder: UIImage(named: "team_placeholder")
+            )
+            cell.awayImg.kf.setImage(
+                with: URL(string: fixture.awayTeamLogo ?? ""),
+                placeholder: UIImage(named: "team_placeholder")
+            )
+        } else {
+            // Empty state with placeholder content
+            cell.homeImg.image = UIImage(named: "team_placeholder")
+            cell.awayImg.image = UIImage(named: "team_placeholder")
+            cell.homeName.text = ""
+            cell.awayName.text = ""
+            cell.date.text = "Check back later"
+        }
     }
     
-    private func configureLatestCell(_ cell: LatestEventsCell, with fixture: Fixture) {
-        cell.homeName.text = fixture.eventHomeTeam
-        cell.awayName.text = fixture.eventAwayTeam
-        cell.finalScore.text = fixture.eventFinalResult
-        
-        cell.homeImg.kf.setImage(
-            with: URL(string: fixture.homeTeamLogo ?? ""),
-            placeholder: UIImage(named: "placeholder_team")
-        )
-        cell.awayImg.kf.setImage(
-            with: URL(string: fixture.awayTeamLogo ?? ""),
-            placeholder: UIImage(named: "placeholder_team")
-        )
+    private func configureLatestCell(_ cell: LatestEventsCell, with fixture: Fixture?) {
+        if let fixture = fixture {
+            // Normal case - we have data
+            cell.homeName.text = fixture.eventHomeTeam
+            cell.awayName.text = fixture.eventAwayTeam
+            cell.finalScore.text = fixture.eventFinalResult
+            
+            cell.homeImg.kf.setImage(
+                with: URL(string: fixture.homeTeamLogo ?? ""),
+                placeholder: UIImage(named: "team_placeholder")
+            )
+            cell.awayImg.kf.setImage(
+                with: URL(string: fixture.awayTeamLogo ?? ""),
+                placeholder: UIImage(named: "team_placeholder")
+            )
+        } else {
+            // Empty state
+            cell.homeImg.image = UIImage(named: "team_placeholder")
+            cell.awayImg.image = UIImage(named: "team_placeholder")
+            cell.homeName.text = "No recent"
+            cell.awayName.text = "No recent"
+            cell.finalScore.text = "0 - 0"
+        }
     }
     
-    private func configureTeamCell(_ cell: TeamsCell, with team: Team) {
-        cell.teamName.text = team.teamName
-        cell.teamImg.kf.setImage(
-            with: URL(string: team.teamLogo ?? ""),
-            placeholder: UIImage(named: "placeholder_team")
-        )
+    private func configureTeamCell(_ cell: TeamsCell, with team: Team?) {
+        if let team = team {
+            // Normal case - we have data
+            cell.teamName.text = team.teamName
+            
+            cell.teamImg.kf.setImage(
+                with: URL(string: team.teamLogo ?? "" ),
+                placeholder: UIImage(named: "team_placeholder")
+            )
+        } else {
+            // Empty state
+            cell.teamImg.image = UIImage(named: "team_placeholder")
+            cell.teamName.text = "No teams found"
+        }
     }
 }
 

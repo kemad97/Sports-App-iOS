@@ -9,6 +9,14 @@ class TeamsCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        // Setup for skeleton
+           isSkeletonable = true
+           contentView.isSkeletonable = true
+           
+        teamImg.isSkeletonable = true
+        teamName.isSkeletonable = true
+        
         setupUI()
     }
     
