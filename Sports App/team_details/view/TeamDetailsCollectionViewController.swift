@@ -36,7 +36,7 @@ class TeamDetailsCollectionViewController: UICollectionViewController,
         
         guard let leagueId = leagueId, let teamId = teamId else { return }
         
-        teamPresenter = TeamDetailsPresenter(view: self, reposatory: SportsReposatory(remoteDataSource: SportsAPIService(), localDataSource: LeaguesLocalDataSource()))
+        teamPresenter = TeamDetailsPresenter(view: self, reposatory: SportsRepository(remoteDataSource: SportsAPIService(), localDataSource: LeaguesLocalDataSource()))
         
         teamPresenter.getTeamDetails(leagueId: leagueId, teamId: teamId)
     }

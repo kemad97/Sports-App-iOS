@@ -12,6 +12,16 @@ class LatestEventsCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        // Setup for skeleton
+           isSkeletonable = true
+           contentView.isSkeletonable = true
+           
+           // Make each component skeletonable
+           homeImg.isSkeletonable = true
+           awayImg.isSkeletonable = true
+           homeName.isSkeletonable = true
+        
         setupUI()
     }
     

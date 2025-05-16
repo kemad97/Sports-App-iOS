@@ -8,10 +8,10 @@
 import Foundation
 
 class FavoritePresenter{
-    private var repo : SportsReposatory!
+    private var repo : SportsRepository!
     private var favoriteView: FavoriteView!
     
-    init(view : FavoriteView, repo : SportsReposatory){
+    init(view : FavoriteView, repo : SportsRepository){
         self.favoriteView = view
         self.repo = repo
     }
