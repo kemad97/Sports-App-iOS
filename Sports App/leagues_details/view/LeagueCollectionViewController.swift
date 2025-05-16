@@ -388,7 +388,7 @@ extension LeagueCollectionViewController {
             cell.homeImg.image = UIImage(named: "team_placeholder")
             cell.awayImg.image = UIImage(named: "team_placeholder")
             cell.homeName.text = "No recent"
-            cell.awayName.text = "matches"
+            cell.awayName.text = "No recent"
             cell.finalScore.text = "0 - 0"
         }
     }
@@ -399,7 +399,7 @@ extension LeagueCollectionViewController {
             cell.teamName.text = team.teamName
             
             cell.teamImg.kf.setImage(
-                with: URL(string: team.teamLogo ?? ""),
+                with: URL(string: team.teamLogo ?? "" ),
                 placeholder: UIImage(named: "team_placeholder")
             )
         } else {

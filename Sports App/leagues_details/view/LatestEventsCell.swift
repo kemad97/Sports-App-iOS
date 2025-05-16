@@ -21,6 +21,8 @@ class LatestEventsCell: UICollectionViewCell {
            homeImg.isSkeletonable = true
            awayImg.isSkeletonable = true
            homeName.isSkeletonable = true
+           awayName.isSkeletonable = true
+        finalScore.isSkeletonable=true
         
         setupUI()
     }
