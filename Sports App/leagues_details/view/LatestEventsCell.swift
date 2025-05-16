@@ -39,9 +39,9 @@ class LatestEventsCell: UICollectionViewCell {
         [homeName, awayName].forEach { label in
             label?.font = .systemFont(ofSize: 12)
             label?.textAlignment = .center
-            label?.numberOfLines = 1
+            label?.numberOfLines = 2
             label?.adjustsFontSizeToFitWidth = true
-            label?.minimumScaleFactor = 0.8
+            label?.minimumScaleFactor = 0.7
         }
         
         // Score label setup
