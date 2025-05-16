@@ -123,18 +123,16 @@
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="150"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="football_card_image" translatesAutoresizingMaskIntoConstraints="NO" id="Cxw-n4-Ygl">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="football_card_image" translatesAutoresizingMaskIntoConstraints="NO" id="Cxw-n4-Ygl">
                                             <rect key="frame" x="20" y="0.0" width="357" height="150"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="150" id="BXA-W3-kkk"/>
-                                                <constraint firstAttribute="width" constant="357" id="SsO-bs-lTe"/>
-                                            </constraints>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" alpha="0.80000001192092896" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Football" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P8c-yI-7gT">
                                             <rect key="frame" x="40" y="102" width="321" height="36"/>
                                             <color key="backgroundColor" red="0.015686274510000001" green="0.0" blue="0.1764705882" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="36" id="l40-NO-ts6"/>
+                                                <constraint firstAttribute="height" constant="36" id="OTp-Nq-N7k"/>
+                                                <constraint firstAttribute="width" constant="321" id="emO-JM-jLq"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                             <color key="textColor" systemColor="secondarySystemGroupedBackgroundColor"/>
@@ -148,11 +146,10 @@
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Cxw-n4-Ygl" firstAttribute="top" secondItem="RHu-W5-a7S" secondAttribute="top" id="CuK-d2-0W5"/>
-                                        <constraint firstItem="P8c-yI-7gT" firstAttribute="leading" secondItem="RHu-W5-a7S" secondAttribute="leadingMargin" constant="20" id="J2X-eG-5np"/>
-                                        <constraint firstItem="Cxw-n4-Ygl" firstAttribute="leading" secondItem="RHu-W5-a7S" secondAttribute="leading" constant="20" symbolic="YES" id="OiF-Y2-yCR"/>
-                                        <constraint firstItem="P8c-yI-7gT" firstAttribute="bottom" secondItem="RHu-W5-a7S" secondAttribute="bottomMargin" id="c2P-gx-9J5"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="P8c-yI-7gT" secondAttribute="trailing" constant="12" id="u8w-q6-3UT"/>
+                                        <constraint firstItem="P8c-yI-7gT" firstAttribute="leading" secondItem="RHu-W5-a7S" secondAttribute="leadingMargin" constant="20" id="OnR-Zq-1Zx"/>
+                                        <constraint firstItem="P8c-yI-7gT" firstAttribute="bottom" secondItem="RHu-W5-a7S" secondAttribute="bottomMargin" id="dwJ-AD-iya"/>
+                                        <constraint firstItem="P8c-yI-7gT" firstAttribute="bottom" secondItem="RHu-W5-a7S" secondAttribute="bottomMargin" id="leN-qO-fGE"/>
+                                        <constraint firstItem="P8c-yI-7gT" firstAttribute="leading" secondItem="RHu-W5-a7S" secondAttribute="leadingMargin" constant="20" id="tXN-ig-knF"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
