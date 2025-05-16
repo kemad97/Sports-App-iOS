@@ -101,7 +101,22 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
         //if there an internet connection
         //navigate to league details screen
         //other wise show no internet connection allert
-        print("Row selected \(indexPath.row)")
+        let storyboard = UIStoryboard(name: "LeagueDetails", bundle: nil)
+        if let leagueDetailsVC = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as? LeagueCollectionViewController{
+            
+            let league = League(
+                leagueKey: Int(leagues[indexPath.row].key),
+                leagueName: leagues[indexPath.row].name ?? "",
+                leagueLogo: leagues[indexPath.row].logo
+            )
+            
+            leagueDetailsVC.league = league
+            
+            navigationController?.pushViewController(leagueDetailsVC, animated: true)
+            
+        }else{
+            print("Failed to instantiate TeamDetailsVC from LeagueCollectionVC.storyboard")
+        }
     }
 
     func displayFavorites(leagues: [FavoriteLeagues]) {

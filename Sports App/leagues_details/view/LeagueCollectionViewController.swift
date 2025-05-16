@@ -414,9 +414,18 @@ extension LeagueCollectionViewController {
 extension LeagueCollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.section == 2 && !teams.isEmpty {
-            let team = teams[indexPath.item]
-            print("Selected team: \(team.teamName)")
-            // Handle team selection
+            //navigate to team details screen
+            let storyboard = UIStoryboard(name: "TeamDetails", bundle: nil)
+            if let teamDetailsVC = storyboard.instantiateViewController(withIdentifier: "teamDetailsScreen") as? TeamDetailsCollectionViewController{
+                
+                teamDetailsVC.leagueId = league.leagueKey
+                teamDetailsVC.teamId = teams[indexPath.row].teamKey
+                
+                navigationController?.pushViewController(teamDetailsVC, animated: true)
+                
+            }else{
+                print("Failed to instantiate TeamDetailsVC from LeagueCollectionVC.storyboard")
+            }
         }
     }
 }
