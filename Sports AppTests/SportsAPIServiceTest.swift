@@ -33,7 +33,7 @@ final class SportsAPIServiceTest: XCTestCase {
             }
         })
         
-        waitForExpectations(timeout: 5)
+        waitForExpectations(timeout: 10)
     }
     
     
@@ -53,7 +53,7 @@ final class SportsAPIServiceTest: XCTestCase {
             }
         })
         
-        waitForExpectations(timeout: 5)
+        waitForExpectations(timeout: 10)
     }
     
     func testFetchTeamsForLeague10(){
@@ -71,7 +71,7 @@ final class SportsAPIServiceTest: XCTestCase {
             }
         }
         
-        waitForExpectations(timeout: 5)
+        waitForExpectations(timeout: 10)
     }
 
     
@@ -91,7 +91,71 @@ final class SportsAPIServiceTest: XCTestCase {
             }
         }
         
-        waitForExpectations(timeout: 5)
+        waitForExpectations(timeout: 10)
+    }
+    
+    func testFetchTeamForLeague10AndTeamId359(){
+        let expectation = expectation(description: "Wait for network call")
+        
+        SportsAPIService.shared.fetchTeam(sport: "football", inLeague: 10, teamId: 359){resutl in
+            switch resutl{
+            case .success(let team):
+                
+                XCTAssert(team.count > 0)
+                
+                expectation.fulfill()
+            case .failure(_):
+                XCTFail()
+            }
+        }
+        waitForExpectations(timeout: 10)
+    }
+    
+    func testFetchFixturesForLeague75ForLatestEvents(){
+        let expectation = expectation(description: "Wait for network call")
+        
+        SportsAPIService.shared.fetchFixtures(sport: "football", leagueId: 75, from: "2025-05-01", to: "2025-05-14"){resutl in
+            switch resutl{
+            case .success(let fixtures):
+                XCTAssert(fixtures.count > 0)
+                expectation.fulfill()
+            case .failure(_):
+                XCTFail()
+            }
+        }
+        
+        waitForExpectations(timeout: 10)
+    }
+
+    func testFetchTeamDetailsForTeamId360() {
+        let expectation = expectation(description: "Wait for network call")
+        
+        SportsAPIService.shared.fetchTeam(sport: "football", inLeague: 10, teamId: 360){ resutl in
+            switch resutl {
+            case .success(let teamDetails):
+                XCTAssert(teamDetails.count > 0)
+                expectation.fulfill()
+            case .failure(_):
+                XCTFail()
+            }
+        }
+        waitForExpectations(timeout: 10)
+    }
+    
+    func testFetchTeamDetailsForTeamId360CheckInfo() {
+        let expectation = expectation(description: "Wait for network call")
+        
+        SportsAPIService.shared.fetchTeam(sport: "football", inLeague: 10, teamId: 360){ resutl in
+            switch resutl {
+            case .success(let teamDetails):
+                XCTAssert(teamDetails[0].teamKey == 360)
+                XCTAssert(teamDetails[0].teamName == "Esteghlal")
+                expectation.fulfill()
+            case .failure(_):
+                XCTFail()
+            }
+        }
+        waitForExpectations(timeout: 10)
     }
     
 }
