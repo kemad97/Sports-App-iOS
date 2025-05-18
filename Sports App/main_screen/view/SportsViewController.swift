@@ -10,7 +10,7 @@ import UIKit
 class SportsViewController: UITableViewController {
     
     var sportName: String = ""
-
+    
     private var sportsData: [Sport] = [
         Sport(id: 0, imagePath: "football_card_image", title: "Football"),
         Sport(id: 1, imagePath: "cricket_card_image", title: "Cricket"),
@@ -22,13 +22,13 @@ class SportsViewController: UITableViewController {
         super.viewDidLoad()
         
         let titleLabel = UILabel()
-            titleLabel.text = "Sports"
-            titleLabel.font = UIFont.boldSystemFont(ofSize: 32)
-            titleLabel.textAlignment = .center
-            titleLabel.backgroundColor = .systemBackground
-            titleLabel.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50)
-            
-            tableView.tableHeaderView = titleLabel
+        titleLabel.text = "Sports"
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 32)
+        titleLabel.textAlignment = .center
+        titleLabel.backgroundColor = .systemBackground
+        titleLabel.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50)
+        
+        tableView.tableHeaderView = titleLabel
     }
     
     
@@ -61,15 +61,27 @@ class SportsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Load the view controller from another storyboard
-        let storyboard = UIStoryboard(name: "SportsLeagues", bundle: nil)
-        if let sportsVC = storyboard.instantiateViewController(withIdentifier: "LeagueTableViewController") as? LeagueTableViewController {
-            
-            sportsVC.sportName = sportsData[indexPath.row].title
-    
-            navigationController?.pushViewController(sportsVC, animated: true)
-        } else {
-            print("Failed to instantiate SportsViewController from SportsLeagues.storyboard")
+        
+        if (NetworkMonitor.shared.isConnected){
+            let storyboard = UIStoryboard(name: "SportsLeagues", bundle: nil)
+            if let sportsVC = storyboard.instantiateViewController(withIdentifier: "LeagueTableViewController") as? LeagueTableViewController {
+                
+                sportsVC.sportName = sportsData[indexPath.row].title
+                
+                navigationController?.pushViewController(sportsVC, animated: true)
+            } else {
+                print("Failed to instantiate SportsViewController from SportsLeagues.storyboard")
+            }
+        }
+        
+        else {
+            let alert = UIAlertController(
+                title: "No Internet Connection",
+                message: "Please check your connection and try again.",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true )
         }
     }
 }

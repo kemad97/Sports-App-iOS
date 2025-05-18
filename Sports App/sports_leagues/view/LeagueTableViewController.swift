@@ -63,23 +63,43 @@ class LeagueTableViewController: UITableViewController, LeaguesView {
     }
     
     func displayError(_ message: String) {
-        print("error: \(message)")
-        //Todo display error alert
+        showNetworkError()
     }
     
+    func showNetworkError() {
+          DispatchQueue.main.async {
+              let alert = UIAlertController(
+                  title: "No Internet Connection",
+                  message: "Please check your connection and try again.",
+                  preferredStyle: .alert
+              )
+              alert.addAction(UIAlertAction(title: "OK", style: .default))
+              self.present(alert, animated: true)
+          }
+      }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Load the view controller from another storyboard
-        let storyboard = UIStoryboard(name: "LeagueDetails", bundle: nil)
-        if let leagueDetailsVC = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as? LeagueCollectionViewController {
-            
-            leagueDetailsVC.league = leaguesList[indexPath.row]
-            
-            leagueDetailsVC.sportName=sportName
-
-            navigationController?.pushViewController(leagueDetailsVC, animated: true)
-        } else {
-            print("Failed to instantiate LeagueDetailsViewController from LeagueDetailsViewController.storyboard")
+        
+        if (NetworkMonitor.shared.isConnected){
+            // Load the view controller from another storyboard
+            let storyboard = UIStoryboard(name: "LeagueDetails", bundle: nil)
+            if let leagueDetailsVC = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as? LeagueCollectionViewController {
+                
+                leagueDetailsVC.league = leaguesList[indexPath.row]
+                
+                leagueDetailsVC.sportName=sportName
+                
+                navigationController?.pushViewController(leagueDetailsVC, animated: true)
+            } else {
+                print("Failed to instantiate LeagueDetailsViewController from LeagueDetailsViewController.storyboard")
+            }
         }
+        else {
+            showNetworkError()
+        }
+        
     }
+    
+    
     
 }
