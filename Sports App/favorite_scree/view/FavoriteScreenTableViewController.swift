@@ -29,7 +29,7 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
         favoritePresenter = FavoritePresenter(
             view: self,
             repo: SportsRepository(
-                remoteDataSource: SportsAPIService(),
+                remoteDataSource: SportsAPIService.shared,
                 localDataSource: LeaguesLocalDataSource()
             )
         )

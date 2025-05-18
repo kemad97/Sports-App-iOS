@@ -16,6 +16,8 @@ class SportsAPIService {
     private let baseURL = "https://apiv2.allsportsapi.com"
     private let apiKey = "89c2658d2da76ab2a89e27553066deadfd3a09be5baa04cf5fb86f5354fee97b"
     
+    private init() {}
+    
     // MARK: - Football Leagues
     func fetchLeagues(sport: String, completion: @escaping (Result<[League], Error>) -> Void) {
         let endpoint = "\(baseURL)/\(sport.lowercased())"
