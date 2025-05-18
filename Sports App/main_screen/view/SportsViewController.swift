@@ -9,6 +9,8 @@ import UIKit
 
 class SportsViewController: UITableViewController {
     
+    var sportName: String = ""
+
     private var sportsData: [Sport] = [
         Sport(id: 0, imagePath: "football_card_image", title: "Football"),
         Sport(id: 1, imagePath: "cricket_card_image", title: "Cricket"),

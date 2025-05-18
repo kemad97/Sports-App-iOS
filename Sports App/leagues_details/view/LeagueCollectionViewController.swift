@@ -8,11 +8,13 @@ class LeagueCollectionViewController: UICollectionViewController ,LeagueDetailsV
     
     // MARK: - Properties
     var league: League!
+    var sportName: String?
+    
     private var upcomingFixtures: [Fixture] = []
     private var latestFixtures: [Fixture] = []
     private var teams: [Team] = []
     private var presenter: LeagueDetailsPresenter!
-
+    
     
     
     // MARK: - Lifecycle
@@ -24,6 +26,7 @@ class LeagueCollectionViewController: UICollectionViewController ,LeagueDetailsV
           let remoteDataSource = SportsAPIService.shared
           let repository = SportsRepository(remoteDataSource: remoteDataSource, localDataSource: localDataSource)
         presenter = LeagueDetailsPresenter(view:self,repository: repository, league: league)
+        presenter.setSport(sportName ?? "football")
           
           // Setup skeleton
           setupSkeletonView()
@@ -418,6 +421,7 @@ extension LeagueCollectionViewController {
             let storyboard = UIStoryboard(name: "TeamDetails", bundle: nil)
             if let teamDetailsVC = storyboard.instantiateViewController(withIdentifier: "teamDetailsScreen") as? TeamDetailsCollectionViewController{
                 
+                teamDetailsVC.sport = sportName
                 teamDetailsVC.leagueId = league.leagueKey
                 teamDetailsVC.teamId = teams[indexPath.row].teamKey
                 

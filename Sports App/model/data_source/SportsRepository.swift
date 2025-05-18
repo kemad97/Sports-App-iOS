@@ -16,8 +16,8 @@ class SportsRepository{
         self.localDataSource = localDataSource
     }
     
-    func getTeamDetails(leagueId: Int, teamId: Int, completion: @escaping (Team?) -> Void){
-        remoteDataSource.fetchTeam(inLeague: leagueId, teamId: teamId){response in
+    func getTeamDetails(sport: String,leagueId: Int, teamId: Int, completion: @escaping (Team?) -> Void){
+        remoteDataSource.fetchTeam(sport: sport, inLeague: leagueId, teamId: teamId){response in
             switch response{
             case .success(let teams):
                 completion(teams[0])

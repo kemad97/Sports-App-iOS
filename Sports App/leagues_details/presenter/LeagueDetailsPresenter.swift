@@ -13,6 +13,8 @@ class LeagueDetailsPresenter {
     private let repository : SportsRepository
     weak private var view : LeagueDetailsView?
     private let league : League
+     var sport: String!
+
     
     // State
     private var upcomingFixtures: [Fixture] = []
@@ -30,6 +32,10 @@ class LeagueDetailsPresenter {
         view?.showSkeleton()
         checkIfFavorite()
         fetchData()
+    }
+    
+    func setSport(_ sport:String){
+        self.sport=sport
     }
     
     
@@ -79,7 +85,7 @@ class LeagueDetailsPresenter {
             let fromDate = dateFormatter.string(from: today)
             let toDate = dateFormatter.string(from: futureDate)
             
-            repository.remoteDataSource.fetchFixtures(leagueId: league.leagueKey, from: fromDate, to: toDate) { [weak self] result in
+        repository.remoteDataSource.fetchFixtures(sport:sport, leagueId: league.leagueKey, from: fromDate, to: toDate) { [weak self] result in
                 switch result {
                 case .success(let fixtures):
                     self?.upcomingFixtures = fixtures
@@ -101,7 +107,7 @@ class LeagueDetailsPresenter {
             let fromDate = dateFormatter.string(from: pastDate)
             let toDate = dateFormatter.string(from: yesterday)
             
-            repository.remoteDataSource.fetchFixtures(leagueId: league.leagueKey, from: fromDate, to: toDate) { [weak self] result in
+            repository.remoteDataSource.fetchFixtures(sport:sport,leagueId: league.leagueKey, from: fromDate, to: toDate) { [weak self] result in
                 switch result {
                 case .success(let fixtures):
                     self?.latestFixtures = fixtures
@@ -113,7 +119,7 @@ class LeagueDetailsPresenter {
         }
         
         private func fetchTeams(completion: @escaping () -> Void) {
-            repository.remoteDataSource.fetchTeams(inLeague: league.leagueKey) { [weak self] result in
+            repository.remoteDataSource.fetchTeams(sport:sport,inLeague: league.leagueKey) { [weak self] result in
                 switch result {
                 case .success(let teams):
                     self?.teams = teams

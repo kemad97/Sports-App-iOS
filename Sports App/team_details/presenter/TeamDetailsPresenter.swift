@@ -10,14 +10,16 @@ import Foundation
 class TeamDetailsPresenter {
     var teamDetailsView: TeamDetailsView?
     var reposatory: SportsRepository!
+    var sport: String!
 
     init(view: TeamDetailsView, reposatory: SportsRepository) {
         self.teamDetailsView = view
         self.reposatory = reposatory
     }
 
-    func getTeamDetails(leagueId: Int, teamId: Int) {
+    func getTeamDetails(sport:String,leagueId: Int, teamId: Int) {
         reposatory.getTeamDetails(
+            sport:sport,
             leagueId: leagueId,
             teamId: teamId,
             completion: { [weak self] team in

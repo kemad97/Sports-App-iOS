@@ -38,9 +38,9 @@ class SportsAPIService {
     }
     
     // MARK: - Teams in a League
-    func fetchTeams(inLeague leagueId: Int, completion: @escaping (Result<[Team], Error>) -> Void) {
-        let endpoint = "\(baseURL)/football"
-        
+    func fetchTeams(sport: String,inLeague leagueId: Int, completion: @escaping (Result<[Team], Error>) -> Void) {
+        let endpoint = "\(baseURL)/\(sport.lowercased())"
+
         let parameters: [String: Any] = [
             "met": "Teams",
             "leagueId": leagueId,
@@ -60,9 +60,9 @@ class SportsAPIService {
     }
     
     // MARK: - Team Details in a League
-    func fetchTeam(inLeague leagueId: Int, teamId: Int, completion: @escaping (Result<[Team], Error>) -> Void) {
-        let endpoint = "\(baseURL)/football"
-        
+    func fetchTeam(sport: String,inLeague leagueId: Int, teamId: Int, completion: @escaping (Result<[Team], Error>) -> Void) {
+        let endpoint = "\(baseURL)/\(sport.lowercased())"
+
         let parameters: [String: Any] = [
             "met": "Teams",
             "leagueId": leagueId,
@@ -83,8 +83,8 @@ class SportsAPIService {
     }
     
     // MARK: - Fixtures (Events)
-    func fetchFixtures(leagueId: Int, from: String, to: String, completion: @escaping (Result<[Fixture], Error>) -> Void) {
-        let endpoint = "\(baseURL)/football"
+    func fetchFixtures(sport: String, leagueId: Int, from: String, to: String, completion: @escaping (Result<[Fixture], Error>) -> Void) {
+           let endpoint = "\(baseURL)/\(sport.lowercased())"
         
         let parameters: [String: Any] = [
             "met": "Fixtures",
@@ -107,8 +107,8 @@ class SportsAPIService {
     }
     
     // MARK: - Team Details
-    func fetchTeamDetails(teamId: Int, completion: @escaping (Result<Team, Error>) -> Void) {
-        let endpoint = "\(baseURL)/football"
+    func fetchTeamDetails(sport:String, teamId: Int, completion: @escaping (Result<Team, Error>) -> Void) {
+        let endpoint = "\(baseURL)/\((sport).lowercased())"
         
         let parameters: [String: Any] = [
             "met": "Teams",

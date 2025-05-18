@@ -19,7 +19,7 @@ class LeagueTableViewController: UITableViewController, LeaguesView {
         
         title = "\(sportName!) Leagues"
         leaguesPresenter = LeaguesPresenter(view: self)
-        leaguesPresenter.getLeagues(sport: sportName)
+        leaguesPresenter.getLeagues(sport: sportName.lowercased())
     }
 
     // MARK: - Table view data source
@@ -73,6 +73,8 @@ class LeagueTableViewController: UITableViewController, LeaguesView {
         if let leagueDetailsVC = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as? LeagueCollectionViewController {
             
             leagueDetailsVC.league = leaguesList[indexPath.row]
+            
+            leagueDetailsVC.sportName=sportName
 
             navigationController?.pushViewController(leagueDetailsVC, animated: true)
         } else {

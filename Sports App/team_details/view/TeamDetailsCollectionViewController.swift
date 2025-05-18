@@ -14,6 +14,7 @@ class TeamDetailsCollectionViewController: UICollectionViewController,
 
     var leagueId: Int?
     var teamId: Int?
+    var sport:String!
 
     private var teamDetails: Team?
     private var teamPresenter: TeamDetailsPresenter!
@@ -38,7 +39,7 @@ class TeamDetailsCollectionViewController: UICollectionViewController,
         
         teamPresenter = TeamDetailsPresenter(view: self, reposatory: SportsRepository(remoteDataSource: SportsAPIService(), localDataSource: LeaguesLocalDataSource()))
         
-        teamPresenter.getTeamDetails(leagueId: leagueId, teamId: teamId)
+        teamPresenter.getTeamDetails(sport:sport, leagueId: leagueId, teamId: teamId)
     }
 
     func drawTeamSection() -> NSCollectionLayoutSection {
