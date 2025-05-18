@@ -67,5 +67,9 @@ class LatestEventsCell: UICollectionViewCell {
         homeName.text = nil
         awayName.text = nil
         finalScore.text = nil
+        
+        if sk.isSkeletonActive {
+                hideSkeleton()
+            }
     }
 }
