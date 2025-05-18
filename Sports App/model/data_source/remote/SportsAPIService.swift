@@ -24,7 +24,7 @@ class SportsAPIService {
     private init() {}
     
     
-    private func checkNetworkAndProceed (completion: @escaping (Bool) -> Void){
+     private func checkNetworkAndProceed (completion: @escaping (Bool) -> Void){
         if (networkMonitor.isConnected){
             completion(true)
         }
@@ -164,40 +164,7 @@ class SportsAPIService {
             }
     }
     
-    // MARK: - Team Details
-    func fetchTeamDetails(sport:String, teamId: Int, completion: @escaping (Result<Team, Error>) -> Void) {
-        
-        checkNetworkAndProceed {
-            connected in
-            guard connected else{
-                completion(.failure("No internet connection available" as! Error) )
-                return
-            }
-        }
-        
-        let endpoint = "\(baseURL)/\((sport).lowercased())"
-        
-        let parameters: [String: Any] = [
-            "met": "Teams",
-            "teamId": teamId,
-            "APIkey": apiKey
-        ]
-        
-        AF.request(endpoint, parameters: parameters)
-            .validate()
-            .responseDecodable(of: TeamDetailsResponse.self) { response in
-                switch response.result {
-                case .success(let teamResponse):
-                    if let team = teamResponse.result.first {
-                        completion(.success(team))
-                    } else {
-                        completion(.failure(NSError(domain: "SportAPI", code: 404, userInfo: [NSLocalizedDescriptionKey: "No team data found"])))
-                    }
-                case .failure(let error):
-                    completion(.failure(error))
-                }
-            }
-    }
+  
     
     
 }

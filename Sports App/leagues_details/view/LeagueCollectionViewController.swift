@@ -450,6 +450,7 @@ extension LeagueCollectionViewController {
                     teamDetailsVC.sport = sportName
                     teamDetailsVC.leagueId = league.leagueKey
                     teamDetailsVC.teamId = teams[indexPath.row].teamKey
+                    print("\(teamDetailsVC.sport) \(teamDetailsVC.leagueId) \(teamDetailsVC.teamId) ")
                     
                     navigationController?.pushViewController(teamDetailsVC, animated: true)
                     
