@@ -40,8 +40,12 @@ class TeamsCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        teamImg.image = nil
-        teamName.text = nil
+        teamImg.image = UIImage(named: "team_placeholder")
+        teamName.text = ""
+        
+        if sk.isSkeletonActive {
+                hideSkeleton()
+            }
     }
     
     // MARK: - Configuration

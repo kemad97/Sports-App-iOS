@@ -63,11 +63,15 @@ class UpcomingEventsCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        homeImg.image = UIImage(named: "placeholder_team")
-        awayImg.image = UIImage(named: "placeholder_team")
+        homeImg.image = UIImage(named: "team_placeholder")
+        awayImg.image = UIImage(named: "team_placeholder")
         homeName.text = ""
         awayName.text = ""
         date.text = ""
+        
+        if sk.isSkeletonActive {
+                hideSkeleton()
+            }
     }
     
 }
