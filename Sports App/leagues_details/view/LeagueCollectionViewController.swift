@@ -15,7 +15,8 @@ class LeagueCollectionViewController: UICollectionViewController ,LeagueDetailsV
     private var teams: [Team] = []
     private var presenter: LeagueDetailsPresenter!
     
-    
+    private var isContentLoaded = false
+
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -59,30 +60,42 @@ class LeagueCollectionViewController: UICollectionViewController ,LeagueDetailsV
     }
     
     // MARK: - LeagueDetailsView Protocol Methods
-      func showSkeleton() {
+    func showSkeleton() {
           DispatchQueue.main.async {
+              self.isContentLoaded = false
               let gradient = SkeletonGradient(baseColor: .systemGray6)
               self.collectionView.showAnimatedGradientSkeleton(usingGradient: gradient)
+              
+
           }
       }
       
-      func hideSkeleton() {
-          DispatchQueue.main.async {
-              self.collectionView.hideSkeleton(reloadDataAfter: true)
-          }
-      }
+    func hideSkeleton() {
+           DispatchQueue.main.async {
+               if self.collectionView.sk.isSkeletonActive {
+                   self.isContentLoaded = true
+                   self.collectionView.stopSkeletonAnimation()
+                   self.collectionView.hideSkeleton(reloadDataAfter: true)
+               }
+           }
+       }
     
     
     
     func updateUI(upcomingFixtures: [Fixture], latestFixtures: [Fixture], teams: [Team]) {
-            self.upcomingFixtures = upcomingFixtures
-            self.latestFixtures = latestFixtures
-            self.teams = teams
-            
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
+          self.upcomingFixtures = upcomingFixtures
+          self.latestFixtures = latestFixtures
+          self.teams = teams
+          self.isContentLoaded = true
+          
+          DispatchQueue.main.async {
+              if self.collectionView.isSkeletonActive {
+              } else {
+                  self.collectionView.reloadData()
+              }
+          }
+      }
+    
     func showError(message: String) {
            DispatchQueue.main.async {
                let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
@@ -430,6 +443,12 @@ extension LeagueCollectionViewController {
             }else{
                 print("Failed to instantiate TeamDetailsVC from LeagueCollectionVC.storyboard")
             }
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if isContentLoaded && cell.sk.isSkeletonActive {
+            cell.hideSkeleton()
         }
     }
 }
