@@ -10,21 +10,21 @@ import Kingfisher
 
 class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
     
-
+    
     private var leagues: [FavoriteLeagues] = []
     private var favoritePresenter: FavoritePresenter!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let titleLabel = UILabel()
-            titleLabel.text = "Favorite Leagues"
-            titleLabel.font = UIFont.boldSystemFont(ofSize: 32)
-            titleLabel.textAlignment = .center
-            titleLabel.backgroundColor = .systemBackground
-            titleLabel.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50)
-            
-            tableView.tableHeaderView = titleLabel
+        titleLabel.text = "Favorite Leagues"
+        titleLabel.font = UIFont.boldSystemFont(ofSize: 32)
+        titleLabel.textAlignment = .center
+        titleLabel.backgroundColor = .systemBackground
+        titleLabel.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 50)
+        
+        tableView.tableHeaderView = titleLabel
         
         favoritePresenter = FavoritePresenter(
             view: self,
@@ -34,7 +34,7 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
             )
         )
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         favoritePresenter.getFavoriteLeagues()
     }
@@ -45,14 +45,14 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
     ) -> CGFloat {
         return 100
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(
         _ tableView: UITableView,
         numberOfRowsInSection section: Int
@@ -60,21 +60,21 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
         // #warning Incomplete implementation, return the number of rows
         return leagues.count
     }
-
+    
     override func tableView(
         _ tableView: UITableView,
         cellForRowAt indexPath: IndexPath
     ) -> UITableViewCell {
         let cell =
-            tableView.dequeueReusableCell(
-                withIdentifier: "cell",
-                for: indexPath
-            ) as! FavorteLeagueTableViewCell
-
+        tableView.dequeueReusableCell(
+            withIdentifier: "cell",
+            for: indexPath
+        ) as! FavorteLeagueTableViewCell
+        
         cell.leagueImage.kf.setImage(with: URL(string: leagues[indexPath.row].logo ?? ""),
                                      placeholder: UIImage(named: "leaguePlaceholder"))
         cell.leagueName.text = leagues[indexPath.row].name
-
+        
         return cell
     }
     
@@ -101,24 +101,35 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
         //if there an internet connection
         //navigate to league details screen
         //other wise show no internet connection allert
-        let storyboard = UIStoryboard(name: "LeagueDetails", bundle: nil)
-        if let leagueDetailsVC = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as? LeagueCollectionViewController{
-            
-            let league = League(
-                leagueKey: Int(leagues[indexPath.row].key),
-                leagueName: leagues[indexPath.row].name ?? "",
-                leagueLogo: leagues[indexPath.row].logo
+        
+        if (NetworkMonitor.shared.isConnected){
+            let storyboard = UIStoryboard(name: "LeagueDetails", bundle: nil)
+            if let leagueDetailsVC = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsViewController") as? LeagueCollectionViewController{
+                
+                let league = League(
+                    leagueKey: Int(leagues[indexPath.row].key),
+                    leagueName: leagues[indexPath.row].name ?? "",
+                    leagueLogo: leagues[indexPath.row].logo
+                )
+                
+                leagueDetailsVC.league = league
+                
+                navigationController?.pushViewController(leagueDetailsVC, animated: true)
+                
+            }else{
+                print("Failed to instantiate TeamDetailsVC from LeagueCollectionVC.storyboard")
+            }
+        }
+        else {
+            let alert = UIAlertController(
+                title: "No Internet Connection",
+                message: "League details require an internet connection.",
+                preferredStyle: .alert
             )
-            
-            leagueDetailsVC.league = league
-            
-            navigationController?.pushViewController(leagueDetailsVC, animated: true)
-            
-        }else{
-            print("Failed to instantiate TeamDetailsVC from LeagueCollectionVC.storyboard")
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true )
         }
     }
-
     func displayFavorites(leagues: [FavoriteLeagues]) {
         self.leagues = leagues
         self.tableView.reloadData()
@@ -127,9 +138,10 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
     func leagueDeleteSuccess() {
         favoritePresenter.getFavoriteLeagues()
     }
-
+    
     func displayError(message: String) {
         print("Error \(message)")
         //display allert to user
     }
 }
+
