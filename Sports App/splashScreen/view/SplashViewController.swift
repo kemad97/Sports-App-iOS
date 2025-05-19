@@ -42,7 +42,7 @@ class SplashViewController: UIViewController {
                 animationView.play()
                 
                 // Set the desired splash screen duration (e.g., 3 seconds)
-        let splashScreenDuration: TimeInterval = 1//2.5
+        let splashScreenDuration: TimeInterval = 2.5
                 DispatchQueue.main.asyncAfter(deadline: .now() + splashScreenDuration) { [weak self] in
                     self?.navigateToMainApp()
                 }
