@@ -24,6 +24,8 @@ class SportsCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Sports"
+        
         let layout = UICollectionViewCompositionalLayout {
             index,
             environement in
@@ -31,7 +33,6 @@ class SportsCollectionViewController: UICollectionViewController {
         }
         self.collectionView.setCollectionViewLayout(layout, animated: true)
 
-        
     }
     
     func drawSportsCard() -> NSCollectionLayoutSection {
@@ -46,7 +47,7 @@ class SportsCollectionViewController: UICollectionViewController {
         // Group
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(320)
+            heightDimension: .absolute(280)
         )
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: groupSize,
@@ -56,6 +57,14 @@ class SportsCollectionViewController: UICollectionViewController {
         // Section
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8)
+        
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(75))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        section.boundarySupplementaryItems = [header]
         
         return section
     }
@@ -118,5 +127,13 @@ class SportsCollectionViewController: UICollectionViewController {
             alert.addAction(UIAlertAction(title: "OK", style: .default))
             present(alert, animated: true )
         }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "sportsHeader", for: indexPath) as! SportsHeaderCollectionReusableView
+        
+        header.header.text = "Sports"
+        
+        return header
     }
 }

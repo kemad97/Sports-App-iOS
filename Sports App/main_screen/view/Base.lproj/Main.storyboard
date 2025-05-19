@@ -118,13 +118,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="DsK-MZ-E4e">
                             <size key="itemSize" width="328" height="356"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="headerReferenceSize" width="50" height="62"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="Imb-9H-JSh" customClass="SportsCellTableViewCell" customModule="Sports_App" customModuleProvider="target">
-                                <rect key="frame" x="96.666666666666671" y="0.0" width="200" height="250"/>
+                                <rect key="frame" x="96.666666666666671" y="62" width="200" height="250"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="efH-5J-CyJ">
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="250"/>
@@ -167,6 +167,27 @@
                                 </connections>
                             </collectionViewCell>
                         </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="sportsHeader" id="6K5-yn-kgo" customClass="SportsHeaderCollectionReusableView" customModule="Sports_App" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="62"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R2T-q8-eUe">
+                                    <rect key="frame" x="34" y="15" width="317" height="21"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottomMargin" secondItem="R2T-q8-eUe" secondAttribute="bottom" constant="18" id="Iff-F0-lPn"/>
+                                <constraint firstItem="R2T-q8-eUe" firstAttribute="top" secondItem="6K5-yn-kgo" secondAttribute="topMargin" constant="7" id="VEl-Nc-wdp"/>
+                                <constraint firstAttribute="trailingMargin" secondItem="R2T-q8-eUe" secondAttribute="trailing" constant="34" id="VuQ-pa-vTM"/>
+                                <constraint firstItem="R2T-q8-eUe" firstAttribute="leading" secondItem="6K5-yn-kgo" secondAttribute="leadingMargin" constant="26" id="cpp-3a-yMl"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="header" destination="R2T-q8-eUe" id="VG4-XM-cou"/>
+                            </connections>
+                        </collectionReusableView>
                         <connections>
                             <outlet property="dataSource" destination="ere-rX-Xsa" id="U23-qn-WZw"/>
                             <outlet property="delegate" destination="ere-rX-Xsa" id="JR1-la-H6d"/>
