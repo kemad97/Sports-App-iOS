@@ -111,7 +111,6 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
                     leagueName: leagues[indexPath.row].name ?? "",
                     leagueLogo: leagues[indexPath.row].logo
                 )
-                leagueDetailsVC.sportName = "football"
                 
                 leagueDetailsVC.league = league
                 leagueDetailsVC.sportName = leagues[indexPath.row].sport
