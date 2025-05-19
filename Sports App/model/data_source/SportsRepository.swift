@@ -28,8 +28,8 @@ class SportsRepository{
         }
     }
     
-    func addFavoriteLeague(leagueKey: Int, leagueName: String, leagueLogo: String, completion: @escaping(Bool)->Void){
-        localDataSource.addFavoriteLeagu(leagueKey: Int32(leagueKey), leagueName: leagueName, leagueLogo: leagueLogo, completion: {result in
+    func addFavoriteLeague(leagueKey: Int, leagueName: String, leagueLogo: String, sport: String, completion: @escaping(Bool)->Void){
+        localDataSource.addFavoriteLeagu(leagueKey: Int32(leagueKey), leagueName: leagueName, leagueLogo: leagueLogo, sport: sport, completion: {result in
             switch result{
             case .success():
                 completion(true)

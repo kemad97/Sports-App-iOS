@@ -13,7 +13,7 @@ class LeagueDetailsPresenter {
     private let repository : SportsRepository
     weak private var view : LeagueDetailsView?
     private let league : League
-     var sport: String!
+    var sport: String!
 
     
     // State
@@ -139,7 +139,7 @@ class LeagueDetailsPresenter {
       }
     
     private func addFavorite() {
-        repository.addFavoriteLeague(leagueKey: league.leagueKey, leagueName: league.leagueName, leagueLogo: league.leagueLogo ?? "", completion: {
+        repository.addFavoriteLeague(leagueKey: league.leagueKey, leagueName: league.leagueName, leagueLogo: league.leagueLogo ?? "", sport: sport.lowercased(), completion: {
             [weak self] success in
             if success {
                 self?.isFavorite=true
