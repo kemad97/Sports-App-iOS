@@ -56,7 +56,7 @@ class TeamDetailsCollectionViewController: UICollectionViewController,
         //groupsize
         
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(355),
+            widthDimension: .fractionalWidth(1),
             heightDimension: .absolute(244)
         )
 
