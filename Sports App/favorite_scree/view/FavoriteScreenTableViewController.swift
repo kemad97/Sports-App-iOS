@@ -114,6 +114,7 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
                 leagueDetailsVC.sportName = "football"
                 
                 leagueDetailsVC.league = league
+                leagueDetailsVC.sportName = leagues[indexPath.row].sport
                 
                 navigationController?.pushViewController(leagueDetailsVC, animated: true)
                 
