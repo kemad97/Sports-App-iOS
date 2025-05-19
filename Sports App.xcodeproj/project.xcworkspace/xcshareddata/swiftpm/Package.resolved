@@ -1,5 +1,24 @@
 {
+  "originHash" : "1e2d865454aec080a40be2207075ae04c1ead290328f93fb905de1091986bf0f",
   "pins" : [
+    {
+      "identity" : "alamofire",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Alamofire/Alamofire.git",
+      "state" : {
+        "revision" : "78424be314842833c04bc3bef5b72e85fff99204",
+        "version" : "5.6.4"
+      }
+    },
+    {
+      "identity" : "kingfisher",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/onevcat/Kingfisher.git",
+      "state" : {
+        "revision" : "2ef543ee21d63734e1c004ad6c870255e8716c50",
+        "version" : "7.12.0"
+      }
+    },
     {
       "identity" : "lottie-ios",
       "kind" : "remoteSourceControl",
@@ -8,7 +27,16 @@
         "revision" : "769b88d83a42ca8d5572b020c96f47e3690b3796",
         "version" : "4.4.3"
       }
+    },
+    {
+      "identity" : "skeletonview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Juanpe/SkeletonView.git",
+      "state" : {
+        "revision" : "2f5274827d310e32c09325dd3e0007120940988e",
+        "version" : "1.31.0"
+      }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
