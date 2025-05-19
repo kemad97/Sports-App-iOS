@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SportsCellTableViewCell: UITableViewCell {
+class SportsCellTableViewCell: UICollectionViewCell {
 
     @IBOutlet weak var sportImage: UIImageView!
     @IBOutlet weak var sportTitle: UILabel!
@@ -15,11 +15,4 @@ class SportsCellTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }
