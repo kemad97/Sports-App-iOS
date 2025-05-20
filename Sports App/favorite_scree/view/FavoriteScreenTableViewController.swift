@@ -75,6 +75,9 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
                                      placeholder: UIImage(named: "leaguePlaceholder"))
         cell.leagueName.text = leagues[indexPath.row].name
         
+        cell.leagueImage.layer.cornerRadius = cell.leagueImage.layer.frame.width/2
+        cell.leagueImage.layer.masksToBounds = true
+        
         return cell
     }
     
