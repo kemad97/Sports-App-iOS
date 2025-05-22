@@ -178,6 +178,9 @@ class TeamDetailsCollectionViewController: UICollectionViewController,
         cell.teamName.text = teamDetails?.teamName ?? ""
         cell.teamCoachName.text = "Coach: \(teamDetails?.coaches?[0].coachName ?? "")"
 
+        cell.teamImage.layer.cornerRadius = cell.teamImage.layer.frame.width/2
+        cell.teamImage.layer.masksToBounds = true
+        
         return cell
     }
 
@@ -202,6 +205,11 @@ class TeamDetailsCollectionViewController: UICollectionViewController,
         cell.playerNumber.text = "#\(playerNumber)"
         cell.playerPosition.text = teamDetails?.players?[indexPath.row].playerType ?? ""
 
+        
+        cell.playerImage.layer.cornerRadius = cell.playerImage.layer.frame.width/2
+        cell.playerImage.layer.masksToBounds = true
+        
+        
         return cell
     }
 
