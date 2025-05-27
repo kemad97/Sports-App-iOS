@@ -4,7 +4,7 @@ import Kingfisher
 
 class LeagueCollectionViewController: UICollectionViewController ,LeagueDetailsView , SkeletonCollectionViewDataSource{
     
-   
+    
     
     // MARK: - Properties
     var league: League!
@@ -16,37 +16,43 @@ class LeagueCollectionViewController: UICollectionViewController ,LeagueDetailsV
     private var presenter: LeagueDetailsPresenter!
     
     private var isContentLoaded = false
-
+    
+    private var visibleSectionIndexes = Set<Int>()
+    
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
-          super.viewDidLoad()
-          
-          // Setup presenter
-          let localDataSource = LeaguesLocalDataSource()
-          let remoteDataSource = SportsAPIService.shared
-          let repository = SportsRepository(remoteDataSource: remoteDataSource, localDataSource: localDataSource)
+        super.viewDidLoad()
+        
+        // Setup presenter
+        let localDataSource = LeaguesLocalDataSource()
+        let remoteDataSource = SportsAPIService.shared
+        let repository = SportsRepository(remoteDataSource: remoteDataSource, localDataSource: localDataSource)
         presenter = LeagueDetailsPresenter(view:self,repository: repository, league: league)
         presenter.setSport(sportName ?? "football")
-          
-          // Setup skeleton
-          setupSkeletonView()
-          
-          // Register header
-          collectionView.register(
-              SectionHeaderView.self,
-              forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
-              withReuseIdentifier: SectionHeaderView.reuseIdentifier
-          )
-          
-          setupUI()
-          setupCollectionViewLayout()
-          
-          // Start loading data
-          presenter.viewDidLoad()
-      }
+        
+        // Setup skeleton
+        setupSkeletonView()
+        
+        // Register header
+        collectionView.register(
+            SectionHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: SectionHeaderView.reuseIdentifier
+        )
+        
+        setupUI()
+        setupCollectionViewLayout()
+        
+        // Start loading data
+        presenter.viewDidLoad()
+        
+        
+        // MARK: - Added to ensure the delegate is set for scroll events
+        collectionView.delegate = self
+    }
     
-
+    
     
     private func setupSkeletonView() {
         // Make collection view skeletonable
@@ -61,83 +67,83 @@ class LeagueCollectionViewController: UICollectionViewController ,LeagueDetailsV
     
     // MARK: - LeagueDetailsView Protocol Methods
     func showSkeleton() {
-          DispatchQueue.main.async {
-              self.isContentLoaded = false
-              let gradient = SkeletonGradient(baseColor: .systemGray6)
-              self.collectionView.showAnimatedGradientSkeleton(usingGradient: gradient)
-              
-
-          }
-      }
-      
+        DispatchQueue.main.async {
+            self.isContentLoaded = false
+            let gradient = SkeletonGradient(baseColor: .systemGray6)
+            self.collectionView.showAnimatedGradientSkeleton(usingGradient: gradient)
+            
+            
+        }
+    }
+    
     func hideSkeleton() {
-           DispatchQueue.main.async {
-               if self.collectionView.sk.isSkeletonActive {
-                   self.isContentLoaded = true
-                   self.collectionView.stopSkeletonAnimation()
-                   self.collectionView.hideSkeleton(reloadDataAfter: true)
-               }
-           }
-       }
+        DispatchQueue.main.async {
+            if self.collectionView.sk.isSkeletonActive {
+                self.isContentLoaded = true
+                self.collectionView.stopSkeletonAnimation()
+                self.collectionView.hideSkeleton(reloadDataAfter: true)
+            }
+        }
+    }
     
     
     
     func updateUI(upcomingFixtures: [Fixture], latestFixtures: [Fixture], teams: [Team]) {
-          self.upcomingFixtures = upcomingFixtures
-          self.latestFixtures = latestFixtures
-          self.teams = teams
-          self.isContentLoaded = true
-          
-          DispatchQueue.main.async {
-              if self.collectionView.sk.isSkeletonActive {
-              } else {
-                  self.collectionView.reloadData()
-              }
-          }
-      }
+        self.upcomingFixtures = upcomingFixtures
+        self.latestFixtures = latestFixtures
+        self.teams = teams
+        self.isContentLoaded = true
+        
+        DispatchQueue.main.async {
+            if self.collectionView.sk.isSkeletonActive {
+            } else {
+                self.collectionView.reloadData()
+            }
+        }
+    }
     
     func showError(message: String) {
-           DispatchQueue.main.async {
-               let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-               alert.addAction(UIAlertAction(title: "OK", style: .default))
-               self.present(alert, animated: true)
-           }
-       }
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true)
+        }
+    }
     
     func showNetworkError() {
-          DispatchQueue.main.async {
-              let alert = UIAlertController(
-                  title: "No Internet Connection",
-                  message: "Please check your connection and try again.",
-                  preferredStyle: .alert
-              )
-              alert.addAction(UIAlertAction(title: "OK", style: .default))
-              self.present(alert, animated: true)
-          }
-      }
+        DispatchQueue.main.async {
+            let alert = UIAlertController(
+                title: "No Internet Connection",
+                message: "Please check your connection and try again.",
+                preferredStyle: .alert
+            )
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true)
+        }
+    }
     
     func navigateToTeamDetails(team: Team) {
-            // Implement navigation to team details screen
-            print("Navigate to team: \(team.teamName)")
-        }
+        // Implement navigation to team details screen
+        print("Navigate to team: \(team.teamName)")
+    }
     
     func updateFavoriteButton(isFavorite: Bool) {
-           DispatchQueue.main.async {
-               let imageName = isFavorite ? "heart.fill" : "heart"
-               let button = UIBarButtonItem(
-                   image: UIImage(systemName: imageName),
-                   style: .plain,
-                   target: self,
-                   action: #selector(self.toggleFavorite)
-               )
-               button.tintColor = .systemRed
-               self.navigationItem.rightBarButtonItem = button
-           }
-       }
+        DispatchQueue.main.async {
+            let imageName = isFavorite ? "heart.fill" : "heart"
+            let button = UIBarButtonItem(
+                image: UIImage(systemName: imageName),
+                style: .plain,
+                target: self,
+                action: #selector(self.toggleFavorite)
+            )
+            button.tintColor = .systemRed
+            self.navigationItem.rightBarButtonItem = button
+        }
+    }
     
     @objc private func toggleFavorite() {
-          presenter.toggleFavorite()
-      }
+        presenter.toggleFavorite()
+    }
     // MARK: - UI Setup
     private func setupUI() {
         title = league?.leagueName ?? "League Details"
@@ -196,9 +202,29 @@ class LeagueCollectionViewController: UICollectionViewController ,LeagueDetailsV
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 20, trailing: 16)
-        section.interGroupSpacing = 12
+        // MARK: - Changed from .groupPaging to .groupPagingCentered for better centering of items
+              section.orthogonalScrollingBehavior = .groupPagingCentered
+              section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 20, trailing: 16)
+              section.interGroupSpacing = 12
+        
+        // MARK: - Added magnification effect with visibleItemsInvalidationHandler
+               section.visibleItemsInvalidationHandler = { [weak self] (items, offset, environment) in
+                   guard let self = self else { return }
+                   
+                   // Track this section for scroll events
+                   self.visibleSectionIndexes.insert(0)
+                   
+                   // Apply zoom effect based on distance from center
+                   items.forEach { item in
+                       let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2.0)
+                       let minScale: CGFloat = 0.85
+                       let maxScale: CGFloat = 1.0
+                       let scale = max(maxScale - (distanceFromCenter / environment.container.contentSize.width), minScale)
+                       
+                       // Apply scale transformation
+                       item.transform = CGAffineTransform(scaleX: scale, y: scale)
+                   }
+               }
         
         // Add header
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
@@ -272,31 +298,31 @@ class LeagueCollectionViewController: UICollectionViewController ,LeagueDetailsV
     }
     
     // MARK: - SkeletonCollectionViewDataSource
-     func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
-         switch indexPath.section {
-         case 0:
-             return "UpcomingEventsCell"
-         case 1:
-             return "LatestEventsCell"
-         case 2:
-             return "TeamsCell"
-         default:
-             return "BasicCell"
-         }
-     }
-     
-     func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-         switch section {
-         case 0: return 2
-         case 1: return 3
-         case 2: return 4
-         default: return 0
-         }
-     }
-     
-     func numSections(in collectionSkeletonView: UICollectionView) -> Int {
-         return 3
-     }
+    func collectionSkeletonView(_ skeletonView: UICollectionView, cellIdentifierForItemAt indexPath: IndexPath) -> SkeletonView.ReusableCellIdentifier {
+        switch indexPath.section {
+        case 0:
+            return "UpcomingEventsCell"
+        case 1:
+            return "LatestEventsCell"
+        case 2:
+            return "TeamsCell"
+        default:
+            return "BasicCell"
+        }
+    }
+    
+    func collectionSkeletonView(_ skeletonView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch section {
+        case 0: return 2
+        case 1: return 3
+        case 2: return 4
+        default: return 0
+        }
+    }
+    
+    func numSections(in collectionSkeletonView: UICollectionView) -> Int {
+        return 3
+    }
     
     
 }
@@ -487,7 +513,7 @@ extension LeagueCollectionViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: collectionView.bounds.width, height: 40)
     }
     
-
+    
 }
 
 
