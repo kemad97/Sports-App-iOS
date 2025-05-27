@@ -13,9 +13,14 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
     
     private var leagues: [FavoriteLeagues] = []
     private var favoritePresenter: FavoritePresenter!
+    private let emptyStateView = UIView()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupEmptyStateView()
+
         
         let titleLabel = UILabel()
         titleLabel.text = "Favorite Leagues"
@@ -34,6 +39,55 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
             )
         )
     }
+    
+    private func setupEmptyStateView() {
+            // Configure empty state view
+            emptyStateView.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: tableView.bounds.height)
+            emptyStateView.backgroundColor = .systemBackground
+            
+            let imageView = UIImageView(image: UIImage(systemName: "heart.fill"))
+            imageView.tintColor = .systemGray3
+            imageView.contentMode = .scaleAspectFit
+            imageView.translatesAutoresizingMaskIntoConstraints = false
+            
+            let label = UILabel()
+            label.text = "No Favorite Leagues Yet"
+            label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+            label.textColor = .systemGray2
+            label.textAlignment = .center
+            label.translatesAutoresizingMaskIntoConstraints = false
+            
+            let subtitleLabel = UILabel()
+            subtitleLabel.text = "Add leagues to your favorites to see them here"
+            subtitleLabel.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+            subtitleLabel.textColor = .systemGray3
+            subtitleLabel.textAlignment = .center
+            subtitleLabel.numberOfLines = 0
+            subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+            emptyStateView.addSubview(imageView)
+            emptyStateView.addSubview(label)
+            emptyStateView.addSubview(subtitleLabel)
+            
+            NSLayoutConstraint.activate([
+                imageView.centerXAnchor.constraint(equalTo: emptyStateView.centerXAnchor),
+                imageView.centerYAnchor.constraint(equalTo: emptyStateView.centerYAnchor, constant: -60),
+                imageView.widthAnchor.constraint(equalToConstant: 80),
+                imageView.heightAnchor.constraint(equalToConstant: 80),
+                
+                label.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
+                label.leadingAnchor.constraint(equalTo: emptyStateView.leadingAnchor, constant: 20),
+                label.trailingAnchor.constraint(equalTo: emptyStateView.trailingAnchor, constant: -20),
+                
+                subtitleLabel.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 8),
+                subtitleLabel.leadingAnchor.constraint(equalTo: emptyStateView.leadingAnchor, constant: 20),
+                subtitleLabel.trailingAnchor.constraint(equalTo: emptyStateView.trailingAnchor, constant: -20)
+            ])
+            
+            // Initially hide the empty state view
+            emptyStateView.isHidden = true
+            tableView.backgroundView = emptyStateView
+        }
     
     override func viewWillAppear(_ animated: Bool) {
         favoritePresenter.getFavoriteLeagues()
@@ -137,6 +191,8 @@ class FavoriteScreenTableViewController: UITableViewController, FavoriteView {
     func displayFavorites(leagues: [FavoriteLeagues]) {
         self.leagues = leagues
         self.tableView.reloadData()
+        emptyStateView.isHidden = !leagues.isEmpty
+
     }
     
     func leagueDeleteSuccess() {
