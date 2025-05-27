@@ -42,18 +42,11 @@ class LeagueTableViewController: UITableViewController, LeaguesView {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! LeagueTableViewCell
-        
-        cell.leagueName.text = leaguesList[indexPath.row].leagueName
-        cell.leagueImage.kf.setImage(with: URL(string: leaguesList[indexPath.row].leagueLogo ?? ""), placeholder: UIImage(named: "leaguePlaceholder"))
-        
-        
-        cell.leagueImage.layer.cornerRadius = cell.leagueImage.layer.frame.width/2
-        cell.leagueImage.layer.masksToBounds = true
-        
-
-        return cell
-    }
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! LeagueTableViewCell
+            let league = leaguesList[indexPath.row]
+            cell.configure(with: league) // Use configure method
+            return cell
+        }
     
     
 
