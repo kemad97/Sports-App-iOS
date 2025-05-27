@@ -9,10 +9,15 @@ import Kingfisher
 import SkeletonView
 
 class LeagueTableViewCell: UITableViewCell {
-    
     // MARK: - Outlets
     @IBOutlet weak var leagueName: UILabel!
     @IBOutlet weak var leagueImage: UIImageView!
+    
+    // MARK: - Properties
+    private var skeletonTimer: Timer?
+    private var pendingLeagueName: String?
+    private var pendingImage: UIImage?
+    private var isSkeletonScheduledToStop: Bool = false
     
     // MARK: - Lifecycle
     override func awakeFromNib() {
@@ -30,28 +35,42 @@ class LeagueTableViewCell: UITableViewCell {
         leagueImage.image = nil
         leagueImage.kf.cancelDownloadTask()
         leagueName.text = nil
-        hideSkeleton()
-        print("Cell reused: Skeleton stopped")
+        pendingLeagueName = nil
+        pendingImage = nil
+        isSkeletonScheduledToStop = false
+        invalidateSkeletonTimer()
+        DispatchQueue.main.async { [weak self] in
+            self?.hideSkeleton()
+            print("Cell reused: Skeleton stopped at \(Date())")
+        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+      
     }
     
     // MARK: - Configuration
     func configure(with league: League) {
-        print("Configuring cell with league: \(league.leagueName ?? "nil")")
-        hideSkeleton() // Stop skeleton before setting content
+        print("Configuring cell with league: \(league.leagueName ?? "nil") at \(Date())")
         
-        leagueName.text = league.leagueName
+        // Store content to apply after 1-second skeleton
+        pendingLeagueName = league.leagueName
+        
+        // Start 1-second skeleton timer
+        startSkeletonTimer(for: league)
         
         guard let logoURL = league.leagueLogo, let url = URL(string: logoURL) else {
-            leagueImage.image = UIImage(named: "leaguePlaceholder")
-            hideSkeleton() // Ensure skeleton is stopped for invalid URLs
-            print("No valid logo URL, using placeholder")
+            pendingImage = UIImage(named: "leaguePlaceholder")
+            print("No valid logo URL, using placeholder for \(league.leagueName ?? "nil") at \(Date())")
             return
         }
         
+        print("Loading image from: \(logoURL)")
         let processor = DownsamplingImageProcessor(size: leagueImage.bounds.size)
         leagueImage.kf.setImage(
             with: url,
-            placeholder: UIImage(named: "leaguePlaceholder"),
+            placeholder: nil, // No placeholder during skeleton
             options: [
                 .processor(processor),
                 .scaleFactor(UIScreen.main.scale),
@@ -59,13 +78,16 @@ class LeagueTableViewCell: UITableViewCell {
                 .cacheOriginalImage
             ],
             completionHandler: { [weak self] result in
-                switch result {
-                case .success:
-                    print("Image loaded successfully for \(league.leagueName ?? "unknown")")
-                case .failure(let error):
-                    print("Image loading failed: \(error)")
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success(let value):
+                        self?.pendingImage = value.image
+                        print("Image loaded successfully for \(league.leagueName ?? "unknown") at \(Date())")
+                    case .failure(let error):
+                        self?.pendingImage = UIImage(named: "leaguePlaceholder")
+                        print("Image loading failed for \(league.leagueName ?? "unknown"): \(error) at \(Date())")
+                    }
                 }
-                self?.hideSkeleton() // Ensure skeleton stops after image load
             }
         )
     }
@@ -101,12 +123,43 @@ class LeagueTableViewCell: UITableViewCell {
     
     // MARK: - SkeletonView
     private func showSkeleton() {
-        print("Starting skeleton effect")
-        [leagueImage, leagueName].forEach { $0.showAnimatedGradientSkeleton() }
+        print("Starting skeleton effect at \(Date())")
+        [leagueImage, leagueName].forEach {
+            $0.showAnimatedGradientSkeleton(
+                usingGradient: .init(baseColor: .systemGray5, secondaryColor: .systemGray3),
+                transition: .crossDissolve(0.25)
+            )
+        }
     }
     
     private func hideSkeleton() {
-        print("Stopping skeleton effect")
-        [leagueImage, leagueName].forEach { $0.hideSkeleton() }
+        guard !isSkeletonScheduledToStop else {
+            print("Skeleton already scheduled to stop at \(Date())")
+            return
+        }
+        isSkeletonScheduledToStop = true
+        print("Stopping skeleton effect at \(Date())")
+        [leagueImage, leagueName].forEach { $0.hideSkeleton(transition: .crossDissolve(0.25)) }
+        // Apply pending content
+        leagueName.text = pendingLeagueName
+        leagueImage.image = pendingImage
+        setNeedsLayout() // Force UI refresh
+    }
+    
+    // MARK: - Skeleton Timer
+    private func startSkeletonTimer(for league: League) {
+        invalidateSkeletonTimer()
+        skeletonTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.hideSkeleton()
+                print("Skeleton stopped after 1-second timer for \(league.leagueName ?? "nil") at \(Date())")
+            }
+            self?.skeletonTimer = nil
+        }
+    }
+    
+    private func invalidateSkeletonTimer() {
+        skeletonTimer?.invalidate()
+        skeletonTimer = nil
     }
 }
