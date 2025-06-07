@@ -270,13 +270,13 @@ class LeagueCollectionViewController: UICollectionViewController ,LeagueDetailsV
     private func createTeamsSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .absolute(80),
-            heightDimension: .absolute(150)
+            heightDimension: .absolute(180)
         )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .absolute(80),
-            heightDimension: .absolute(150)
+            heightDimension: .absolute(180)
         )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
@@ -284,6 +284,25 @@ class LeagueCollectionViewController: UICollectionViewController ,LeagueDetailsV
         section.orthogonalScrollingBehavior = .continuous
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 20, trailing: 16)
         section.interGroupSpacing = 12
+        
+        // MARK: - Added magnification effect with visibleItemsInvalidationHandler
+        section.visibleItemsInvalidationHandler = { [weak self] (items, offset, environment) in
+            guard let self = self else { return }
+            
+            // Track this section for scroll events
+            self.visibleSectionIndexes.insert(2)
+            
+            // Apply zoom effect based on distance from center
+            items.forEach { item in
+                let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2.0)
+                let minScale: CGFloat = 0.9
+                let maxScale: CGFloat = 1.1
+                let scale = max(maxScale - (distanceFromCenter / environment.container.contentSize.width), minScale)
+                
+                // Apply scale transformation
+                item.transform = CGAffineTransform(scaleX: scale, y: scale)
+            }
+        }
         
         // Add header
         let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(40))
