@@ -19,7 +19,7 @@ class SportsAPIService {
 
     // API details - use your actual API key
     private let baseURL = "https://apiv2.allsportsapi.com"
-    private let apiKey = "fd22eb85b48b7b792fd7a9ed3dab8d0e0fab84af6f2e5e21e0665a4e15db3751"
+    private let apiKey = "f5658773eb3be6b82141a5e2336105868fe872042d4c7e2f88ee053228f871d8"
     
     private init() {}
     
